@@ -5,6 +5,17 @@ The project demonstrates how two parties can safely generate a shared secret key
 
 ---
 
+**Prince Sultan University**
+**Developed by:** 
+- Shoug Fawaz Alomran
+- Fai Mohammad Khanjar
+- Aljohara Waleed Albawardi
+- Yara Mutlaq Alzamel
+
+**Submission Date:** 9/11/2025
+
+---
+
 ## Project Objectives
 - Understand the mathematical foundation of public-key cryptography.
 - Implement a secure key exchange process using modular arithmetic.
@@ -32,10 +43,10 @@ The project demonstrates how two parties can safely generate a shared secret key
 
 | Member | Focus Area |
 |:--|:--|
-| **A** | Public parameters & utilities |
-| **B** | Key generation & shared secret math |
-| **C** | Encryption & decryption logic |
-| **D** | Validation, integration, and report assembly |
+| **Yara** | Public parameters & utilities |
+| **Fai** | Key generation & shared secret math |
+| **Aljohara** | Encryption & decryption logic |
+| **Shoug** | Validation, integration, and report assembly |
 
 ---
 
