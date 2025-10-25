@@ -1,9 +1,39 @@
+
 public class Parameters {
- // Task: Declare private fields for q (prime number) and alpha (primitive root)
-    
-    // Task: Create a constructor that sets q and alpha
+ 
+    // Private fields for q (large prime number) and alpha (primitive root)
+    private int q;
+    private int alpha;
 
-    // Task: Create getters for q and alpha
+    // Constructor that sets q and alpha
+    public Parameters(int q, int alpha) {
+       this.q = q;       
+        this.alpha = alpha;
+    }
 
-    // Task: Override toString() to neatly print q and alpha values
+    // Getter for q
+    public int getQ() {
+        return q;
+    }
+
+    // Getter for alpha
+    public int getAlpha() {
+        return alpha;
+    }
+
+    // Override toString() to neatly print q and alpha values
+    @Override
+    public String toString() {
+        return "Public Parameters:\n" +
+               "Prime number (q): " + q + "\n" +
+               "Primitive root (α): " + alpha;
+    }
 }
+
+
+
+
+    
+
+
+
