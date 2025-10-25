@@ -30,13 +30,13 @@ public class Main {
         // Input and validate alpha (must be 1 < alpha < q)
         while (true) { // This loop continues until a valid alpha is entered.
             try {
-                System.out.print("Enter a generator alpha (must be >1 and <q): ");
+             System.out.print("Enter a primitive root alpha (must be >1 and <q): ");
                 alpha = new BigInteger(input.nextLine());
-                if (Validator.isAlphaInRange(alpha, q)) {
-                    System.out.println("Valid alpha accepted.");
+                if (Validator.isPrimitiveRoot(alpha, q)) {
+                    System.out.println("Valid primitive root accepted.");
                     break;
                 } else {
-                    System.out.println("Alpha must be between 1 and q. Try again.");
+                    System.out.println("Alpha is not a primitive root of q. Try again.");
                 }
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter a number.");
