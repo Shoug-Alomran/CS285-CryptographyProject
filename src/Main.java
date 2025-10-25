@@ -1,26 +1,66 @@
+import java.math.BigInteger;
+import java.util.Scanner;
+
 public class Main {
-    public static void main(String[] args) {// Task: Create Scanner for input
 
-        // Task: Initialize Parameters (set q and alpha)
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        BigInteger q = null;
+        BigInteger alpha = null;
+        String message = null;
 
-        // Task: Validate q (isPrime) and alpha range
+        System.out.println("=== Diffie–Hellman Key Exchange Demo ===");
 
-        // Task: Generate private keys for User A and User B
+        // Input and validate q (prime)
+        while (true) { // This loop continues until a valid q is entered.
+            try {
+                System.out.print("Enter a prime number q (≥ 3): ");
+                q = new BigInteger(input.nextLine());
+                if (Validator.isPrime(q)) {
+                    System.out.println("Valid prime q accepted.");
+                    break;
+                } else {
+                    System.out.println("Not a valid prime number. Try again.");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
+        }
 
-        // Task: Compute public keys for both users
+        // Input and validate alpha (must be 1 < alpha < q)
+        while (true) { // This loop continues until a valid alpha is entered.
+            try {
+                System.out.print("Enter a generator alpha (must be >1 and <q): ");
+                alpha = new BigInteger(input.nextLine());
+                if (Validator.isAlphaInRange(alpha, q)) {
+                    System.out.println("Valid alpha accepted.");
+                    break;
+                } else {
+                    System.out.println("Alpha must be between 1 and q. Try again.");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
+        }
 
-        // Task: Compute shared secret keys for both users and verify they match
+        // Input and validate message (> 20 characters)
+        while (true) { // This loop continues until a valid message is entered.
+            System.out.print("Enter your message (> 20 characters): ");
+            message = input.nextLine();
+            if (Validator.isValidMessage(message)) {
+                System.out.println("Message accepted.");
+                break;
+            } else {
+                System.out.println("Message too short. Please try again.");
+            }
+        }
 
-        // Task: Prompt user for message (> 20 chars)
+        System.out.println("\nAll inputs are valid. You may now proceed to key generation and encryption.");
+        // Future steps:
+        // - KeyExchange: generate keys
+        // - Encryptor: encrypt & decrypt
+        // - Print output
 
-        // Task: Validate message length using Validator
-
-        // Task: Encrypt message using Encryptor
-
-        // Task: Decrypt ciphertext and print both results
-
-        // Task: Print all key values and outputs using Utils.printLine()
-
-        // Task: Close scanner and handle any exceptions gracefully
+        input.close();
     }
 }
