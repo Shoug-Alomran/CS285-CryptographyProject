@@ -7,6 +7,10 @@ public class Encryptor {
     // - Return Base64-encoded ciphertext for display
     String encrypt(String plaintext, BigInteger sharedKey){
         try{
+            if(plaintext == null || plaintext.isEmpty()){
+                System.out.printline("PlainText is empty");
+            }
+            byte[] keyBytes = MessageDigest.getInstance();
         }
     }
 
