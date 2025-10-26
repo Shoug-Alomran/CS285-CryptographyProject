@@ -1,12 +1,23 @@
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 public class KeyExchange {
-    // Task: Create a SecureRandom object for generating random private keys
 
-    // Task: Method to generate private key (1 <= x < q)
-    // Use Utils.getRandom() or SecureRandom nextBigInteger()
+    // 1️Generates a public key: α^x mod q
+    public BigInteger generatePublicKey(BigInteger alpha, BigInteger privateKey, BigInteger q) {
+        // TODO: Implement α^x mod q using modPow
+        return null;
+    }
 
-    // Task: Method to compute public key: y = alpha^x mod q
+    // Computes the shared secret: (Y_peer)^x mod q
+    public BigInteger computeSharedKey(BigInteger peerPublicKey, BigInteger privateKey, BigInteger q) {
+        // TODO: Implement (Y_peer)^x mod q using modPow
+        return null;
+    }
 
-    // Task: Method to compute shared key: K = (peerPublic)^x mod q
-
-    // Task: Print intermediate values (optional, for debugging)
+    // Generates a random private key (1 ≤ x ≤ q−2)
+    public BigInteger generatePrivateKey(BigInteger q) {
+        // TODO: Implement random key generation
+        return null;
+    }
 }
