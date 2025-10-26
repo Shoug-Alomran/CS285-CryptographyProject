@@ -12,6 +12,8 @@ public class Encryptor {
     }
     // Implement encrypt(message, key)
     String encrypt(String plainText, BigInteger sharedKey) throws Exception{
+        //validate plain text
+        validatePlainText(plainText);
         byte[] plainTextBytes = plainText.getBytes(StandardCharsets.UTF_8);
         byte[] keyBytes = deriveKey(sharedKey);
         byte[] cipherTextByte = xor(plainTextBytes, keyBytes);
@@ -28,6 +30,8 @@ public class Encryptor {
 
     // Implement decrypt(ciphertext, key)
     String decrypt(String base64CipherText, BigInteger sharedKey) throws Exception{
+        //validate cipher text
+        validateCipherText(base64CipherText);
         byte[] keyBytes = deriveKey(sharedKey);
         byte[] cipherTextByte = Base64.getDecoder().decode(base64CipherText);
         byte[] plainTextBytes = xor(cipherTextByte, keyBytes);
