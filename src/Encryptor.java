@@ -1,7 +1,6 @@
 import java.math.BigInteger;
 import java.util.Base64;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
 
 public class Encryptor {
@@ -12,7 +11,7 @@ public class Encryptor {
             return digest.digest(bigIntByte);
     }
     // Implement encrypt(message, key)
-    String encrypt(String plainText, BigInteger sharedKey){
+    String encrypt(String plainText, BigInteger sharedKey) throws Exception{
         byte[] plainTextBytes = plainText.getBytes(StandardCharsets.UTF_8);
         byte[] keyBytes = deriveKey(sharedKey);
         byte[] cipherTextByte = xor(plainTextBytes, keyBytes);
@@ -36,4 +35,22 @@ public class Encryptor {
     }
 
     // Task: Add simple error handling for empty or too-short messages
+    // Check messages before encryption
+    public static void validatePlainText(String plainText){
+        if(plainText == null || plainText.isEmpty()){
+            throw new IllegalArgumentException("Plain text cannot be empty");
+        }
+        if(plainText.length() < 3){
+            throw new IllegalArgumentException("Plain text cannot be less than 3 letters, use more letters for better security");
+        }
+    }
+    // Check messages before decryption
+    public static void validateCipherText(String cipherText){
+        if(cipherText == null || cipherText.isEmpty()){
+            throw new IllegalArgumentException("Cipher text cannot be empty");
+        }
+        if(cipherText.length() < 4){
+            throw new IllegalArgumentException("Cipher text cannot be less than 4 letters, use more letters for better security");
+        }
+    }
 }
