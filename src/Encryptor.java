@@ -5,16 +5,13 @@ import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
 
 public class Encryptor {
-    // Task: Convert shared BigInteger key into a byte array (keyBytes)
+    // Convert shared BigInteger key into a byte array (keyBytes)
     private byte[] deriveKey(BigInteger key) throws Exception{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] bigIntByte = key.toByteArray();
             return digest.digest(bigIntByte);
     }
-    // Task: Implement encrypt(message, key)
-    // - Convert plaintext to bytes (UTF-8)
-    // - XOR each byte with keyBytes[i % keyBytes.length]
-    // - Return Base64-encoded ciphertext for display
+    // Implement encrypt(message, key)
     String encrypt(String plainText, BigInteger sharedKey){
         byte[] plainTextBytes = plainText.getBytes(StandardCharsets.UTF_8);
         byte[] keyBytes = deriveKey(sharedKey);
@@ -30,10 +27,7 @@ public class Encryptor {
         return result;
     }
 
-    // Task: Implement decrypt(ciphertext, key)
-    // - Base64-decode the ciphertext
-    // - XOR with same keyBytes
-    // - Convert back to string and return plaintext
+    // Implement decrypt(ciphertext, key)
     String decrypt(String base64CipherText, BigInteger sharedKey) throws Exception{
         byte[] keyBytes = deriveKey(sharedKey);
         byte[] cipherTextByte = Base64.getDecoder().decode(base64CipherText);
