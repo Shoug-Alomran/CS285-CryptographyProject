@@ -5,11 +5,16 @@ public class Encryptor {
     // - Convert plaintext to bytes (UTF-8)
     // - XOR each byte with keyBytes[i % keyBytes.length]
     // - Return Base64-encoded ciphertext for display
+    String encrypt(String plaintext, BigInteger sharedKey){
+        try{
+        }
+    }
 
     // Task: Implement decrypt(ciphertext, key)
     // - Base64-decode the ciphertext
     // - XOR with same keyBytes
     // - Convert back to string and return plaintext
+    String decrypt(String base64CipherText, BigInteger sharedKey)
 
     // Task: Add simple error handling for empty or too-short messages
 }
