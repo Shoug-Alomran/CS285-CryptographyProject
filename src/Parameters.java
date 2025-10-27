@@ -2,7 +2,7 @@ import java.math.BigInteger;
 
 public class Parameters {
  
-    // Private fields for q (large prime number) and alpha (primitive root)
+
     private BigInteger q;
     private BigInteger alpha;
 
@@ -12,17 +12,15 @@ public class Parameters {
         this.alpha = alpha;
     }
 
-    // Getter for q
+
     public BigInteger getQ() {
         return q;
     }
 
-    // Getter for alpha
     public BigInteger getAlpha() {
         return alpha;
     }
 
-    // Override toString() to neatly print q and alpha values
     @Override
     public String toString() {
         return "Public Parameters:\n" +
