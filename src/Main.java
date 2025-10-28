@@ -40,22 +40,23 @@ public class Main {
     private static void runNumericalExample() {
         System.out.println("\n--- Numerical Example (Section 1.3) ---");
 
-        KeyExchange key = new KeyExchange();
         // Values from the example
         BigInteger q = BigInteger.valueOf(23); // Large prime number
         BigInteger alpha = BigInteger.valueOf(5); // Primitive root mod q
         Parameters storage = new Parameters(q, alpha); // Store q and alpha.
 
         BigInteger Xa = BigInteger.valueOf(6); // Private key for Car 1
-        BigInteger Xb = BigInteger.valueOf(15);// Private key for Car 2
+        BigInteger Xb = BigInteger.valueOf(15); // Private key for Car 2
 
-        BigInteger Ya = key.generatePublicKey(alpha, Xa, q); // Public key for Car 1
-        BigInteger Yb = key.generatePublicKey(alpha, Xb, q); // Public key for Car 2
+        // Public keys
+        BigInteger Ya = alpha.modPow(Xa, q); // 5^6 mod 23 = 8
+        BigInteger Yb = alpha.modPow(Xb, q); // 5^15 mod 23 = 19
 
-        BigInteger kA = key.computeSharedKey(Yb, Xa, q); // Shared secret for Car 1
-        BigInteger kB = key.computeSharedKey(Ya, Xb, q); // Shared secret for Car 2
+        // Shared secrets
+        BigInteger kA = Yb.modPow(Xa, q); // 19^6 mod 23 = 2
+        BigInteger kB = Ya.modPow(Xb, q); // 8^15 mod 23 = 2
 
-        // Prints an intro to the scenario described in Section 1.3 of the report
+        // Prints the intro of the scenario described in Section 1.3 of the report
         System.out.println(
                 "To give an example, both 2 cars and the control center need a safe way to communicate during the royal convoy.");
 
@@ -91,7 +92,6 @@ public class Main {
 
         System.out.println("Both cars get the same secret key " + kA
                 + ", which keeps their messages safe so no one can read them.\n");
-
     }
 
     private static void runLiveMode(Scanner input) {
@@ -110,55 +110,89 @@ public class Main {
         System.out.print("Your choice (a/b): ");
         String choice = input.nextLine().trim().toLowerCase();
 
-        BigInteger Xa, Xb; // Private keys for Car 1 and Car 2
-
-        KeyExchange key = new KeyExchange(); // Key exchange instance
+        BigInteger Ya, Yb, kA, kB;
 
         if ("b".equals(choice)) {
-            Xa = Helpers.promptPrivateKey(input, q, "Enter private key for Car 1: ");
-            Xb = Helpers.promptPrivateKey(input, q, "Enter private key for Car 2: ");
+            // Manual branch: compute with direct math
+            BigInteger Xa = Helpers.promptPrivateKey(input, q, "Enter private key for Car 1: ");
+            BigInteger Xb = Helpers.promptPrivateKey(input, q, "Enter private key for Car 2: ");
+
+            Ya = alpha.modPow(Xa, q);
+            Yb = alpha.modPow(Xb, q);
+
+            kA = Yb.modPow(Xa, q);
+            kB = Ya.modPow(Xb, q);
+
+            if (!kA.equals(kB)) {
+                System.out.println("Shared keys do not match. Please try again.\n");
+                return;
+            }
+
+            String message = Helpers.promptMessage(input); // Prompt for message (> 20 characters)
+
+            // --- Aljohara's part: Encryption and Decryption --
+            try {
+                Encryptor enc = new Encryptor();
+                String cipher = enc.encrypt(message, kA);
+                String plain = enc.decrypt(cipher, kB);
+
+                System.out.println("\n--- RESULTS ---");
+                System.out.println("q  = " + q);
+                System.out.println("alpha  = " + alpha);
+                System.out.println("Xa = " + Xa);
+                System.out.println("Xb = " + Xb);
+                System.out.println("Ya = " + Ya);
+                System.out.println("Yb = " + Yb);
+                System.out.println("Shared key = " + kA);
+                System.out.println("Original Message  = " + message);
+                System.out.println("Encrypted Message = " + cipher);
+                System.out.println("Decrypted Message = " + plain);
+                System.out.println("Decryption OK = " + plain.equals(message));
+                System.out.println("Secure session established between convoy vehicles and control center.\n");
+            } catch (Exception e) {
+                System.out.println("Encryption/Decryption failed: " + e.getMessage());
+            }
+
         } else {
-            Xa = key.generatePrivateKey(q); // Auto-generate private key for Car 1
-            Xb = key.generatePrivateKey(q); // Auto-generate private key for Car 2
-            System.out.println("Auto private keys generated for both cars.\n");
-        }
+            // --- Auto branch: demonstrate Fai’s KeyExchange(q, alpha) objects ---
+            KeyExchange car1 = new KeyExchange(q, alpha); // auto private key inside constructor
+            KeyExchange car2 = new KeyExchange(q, alpha); // auto private key inside constructor
 
-        BigInteger Ya = key.generatePublicKey(alpha, Xa, q); // Public key for Car 1
-        BigInteger Yb = key.generatePublicKey(alpha, Xb, q); // Public key for Car 2
+            Ya = car1.getPublicKey();
+            Yb = car2.getPublicKey();
 
-        BigInteger kA = key.computeSharedKey(Yb, Xa, q); // Shared secret for Car 1
-        BigInteger kB = key.computeSharedKey(Ya, Xb, q); // Shared secret for Car 2
+            kA = car1.computeSharedKey(Yb);
+            kB = car2.computeSharedKey(Ya);
 
-        if (!kA.equals(kB)) { // Verify shared keys match
-            System.out.println("Shared keys do not match. Please try again.\n");
-            return;
-        }
+            if (!kA.equals(kB)) {
+                System.out.println("Shared keys do not match. Please try again.\n");
+                return;
+            }
 
-        String message = Helpers.promptMessage(input); // Prompt for message (> 20 characters)
+            String message = Helpers.promptMessage(input); // Prompt for message (> 20 characters)
 
-        // --- Aljohara's part: Encryption and Decryption --
-        try {
-            Encryptor encrypt = new Encryptor();
-            String cipher = encrypt.encrypt(message, kA); // Encrypt message using shared key
-            String plain = encrypt.decrypt(cipher, kB); // Decrypt message using same key
+            // --- Aljohara's part: Encryption and Decryption --
+            try {
+                Encryptor enc = new Encryptor();
+                String cipher = enc.encrypt(message, kA);
+                String plain = enc.decrypt(cipher, kB);
 
-            // Print results including encryption/decryption
-            System.out.println("\n--- RESULTS ---");
-            System.out.println("q = " + q);
-            System.out.println("alpha = " + alpha);
-            System.out.println("Xa = " + Xa);
-            System.out.println("Xb = " + Xb);
-            System.out.println("Ya = " + Ya);
-            System.out.println("Yb = " + Yb);
-            System.out.println("Shared key = " + kA);
-            System.out.println("Original Message = " + message);
-            System.out.println("Encrypted Message = " + cipher);
-            System.out.println("Decrypted Message = " + plain);
-            System.out.println("Decryption OK = " + plain.equals(message));
-            System.out.println("Secure session established between convoy vehicles and control center.\n");
-
-        } catch (Exception e) {
-            System.out.println("Encryption/Decryption failed: " + e.getMessage());
+                System.out.println("\n--- RESULTS ---");
+                System.out.println("q  = " + q);
+                System.out.println("alpha  = " + alpha);
+                System.out.println("Xa = " + car1.getPrivateKey());
+                System.out.println("Xb = " + car2.getPrivateKey());
+                System.out.println("Ya = " + Ya);
+                System.out.println("Yb = " + Yb);
+                System.out.println("Shared key = " + kA);
+                System.out.println("Original Message  = " + message);
+                System.out.println("Encrypted Message = " + cipher);
+                System.out.println("Decrypted Message = " + plain);
+                System.out.println("Decryption OK = " + plain.equals(message));
+                System.out.println("Secure session established between convoy vehicles and control center.\n");
+            } catch (Exception e) {
+                System.out.println("Encryption/Decryption failed: " + e.getMessage());
+            }
         }
     }
 }
