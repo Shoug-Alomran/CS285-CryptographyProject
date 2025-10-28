@@ -3,8 +3,6 @@ import java.util.Base64;
 import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
 
-
-
 public class Encryptor {
     // Convert shared BigInteger key into a byte array (keyByte)
     // uses bigInteger for huge values
@@ -16,8 +14,8 @@ public class Encryptor {
 
         //xor function
         private byte[] xor(byte[] data, byte[] key) {
-        byte[] xorArray = new byte[data.length]; 
-        for (int i = 0; i < data.length; i++) {
+        byte[] xorArray = new byte[data.length]; //creates a new byte array to store the data
+        for (int i = 0; i < data.length; i++) { 
             xorArray[i] = (byte) (data[i] ^ key[i % key.length]); //equation to cipher msg
         }
         return xorArray;
@@ -51,4 +49,5 @@ public class Encryptor {
         if (cipherMsg == null) {
             throw new IllegalArgumentException("Cipher message cannot be empty");
         }
+}
 }
