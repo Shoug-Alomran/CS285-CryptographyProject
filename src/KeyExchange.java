@@ -1,23 +1,41 @@
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-public class KeyExchange {
+public class KeyExchange extends Parameters {
 
-    // 1️Generates a public key: alpha^x mod q
-    public BigInteger generatePublicKey(BigInteger alpha, BigInteger privateKey, BigInteger q) {
-        // TODO: Implement alpha^x mod q using modPow
-        return null;
+    private SecureRandom random = new SecureRandom();
+
+    // Attributes to store keys
+    private BigInteger privateKey;
+    private BigInteger publicKey;
+
+    public KeyExchange(BigInteger q, BigInteger alpha) {
+        super(q, alpha); // call Parameters class constructor
+        generateKeys(); // generate public and private keys when object is created
     }
 
-    // Computes the shared secret: (Y_peer)^x mod q
-    public BigInteger computeSharedKey(BigInteger peerPublicKey, BigInteger privateKey, BigInteger q) {
-        // TODO: Implement (Y_peer)^x mod q using modPow
-        return null;
+    // Generate a random private key and compute corresponding public key
+    private void generateKeys() {
+        this.privateKey = new BigInteger(getQ().bitLength(), random).mod(getQ().subtract(BigInteger.TWO))
+                .add(BigInteger.ONE);
+        // 1 <= x <= q-2
+
+        this.publicKey = getAlpha().modPow(privateKey, getQ());
+        // Y = α^x mod q
     }
 
-    // Generates a random private key (1 ≤ x ≤ q−2)
-    public BigInteger generatePrivateKey(BigInteger q) {
-        // TODO: Implement random key generation
-        return null;
+    // Compute shared key using peer's public key
+
+    public BigInteger computeSharedKey(BigInteger otherPublic) {
+        return otherPublic.modPow(privateKey, getQ());
+    }
+
+    // Getters for the keys
+    public BigInteger getPrivateKey() {
+        return privateKey;
+    }
+
+    public BigInteger getPublicKey() {
+        return publicKey;
     }
 }
