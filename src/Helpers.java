@@ -6,7 +6,6 @@ public class Helpers {
 
     // 1. Prompt for a prime q (≥ 3). Re-prompts until valid.
     public static BigInteger promptPrime(Scanner input) {
-        System.out.println("Step 1: Choose a large prime number q (e.g., 23 or 47).");
         while (true) {
             try {
                 System.out.print("Enter a prime q (≥ 3): ");
@@ -22,7 +21,6 @@ public class Helpers {
 
     // 2. Prompt for alpha with range check 1 < alpha < q. Re-prompts until valid.
     public static BigInteger promptAlpha(Scanner in, BigInteger q) {
-        System.out.println("\nStep 2: Choose alpha (a number between 1 and q).");
         while (true) {
             try {
                 System.out.print("Enter alpha (1 < alpha < q): ");
@@ -76,7 +74,6 @@ public class Helpers {
 
     // 5. Prompt for a message (> 20 characters). Re-prompts until valid.
     public static String promptMessage(Scanner input) {
-        System.out.println("\nStep 3: Enter the message to be securely sent between vehicles.");
         while (true) {
             System.out.print("Enter a message (> 20 characters): ");
             String message = input.nextLine();
