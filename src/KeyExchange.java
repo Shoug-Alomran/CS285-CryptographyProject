@@ -3,9 +3,9 @@ import java.security.SecureRandom;
 
 public class KeyExchange {
 
-    // 1️Generates a public key: α^x mod q
+    // 1️Generates a public key: alpha^x mod q
     public BigInteger generatePublicKey(BigInteger alpha, BigInteger privateKey, BigInteger q) {
-        // TODO: Implement α^x mod q using modPow
+        // TODO: Implement alpha^x mod q using modPow
         return null;
     }
 
