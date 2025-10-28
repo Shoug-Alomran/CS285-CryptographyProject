@@ -117,6 +117,7 @@ public class Main {
             BigInteger Xa = Helpers.promptPrivateKey(input, q, "Enter private key for Car 1: ");
             BigInteger Xb = Helpers.promptPrivateKey(input, q, "Enter private key for Car 2: ");
 
+            // Manual computation of public keys and shared keys
             Ya = alpha.modPow(Xa, q);
             Yb = alpha.modPow(Xb, q);
 
