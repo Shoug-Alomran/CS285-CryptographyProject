@@ -9,7 +9,7 @@ public class Encryptor {
     private byte[] Key(BigInteger key) throws Exception {
         MessageDigest msgDigest = MessageDigest.getInstance("SHA-256"); //SHA for Secure Hash Algorithm, it outputs 256 outputs
         byte[] ArrayByte = key.toByteArray(); //converts each letter to a byte to help in ciphering the texts letter by letter
-        return msgDigest.msgDigest(ArrayByte); //stores the bytes in the program
+        return MessageDigest.MessageDigest(ArrayByte); //stores the bytes in the program
     }
 
         //xor function
