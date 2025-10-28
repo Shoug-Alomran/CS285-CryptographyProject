@@ -136,15 +136,29 @@ public class Main {
 
         String message = Helpers.promptMessage(input); // Prompt for message (> 20 characters)
 
-        System.out.println("\n--- RESULTS ---");
-        System.out.println("q  = " + q);
-        System.out.println("alpha  = " + alpha);
-        System.out.println("Xa = " + Xa);
-        System.out.println("Xb = " + Xb);
-        System.out.println("Ya = " + Ya);
-        System.out.println("Yb = " + Yb);
-        System.out.println("Shared key = " + kA);
-        System.out.println("Message  = " + message);
-        System.out.println("Secure session established between convoy vehicles and control center.\n");
+        // --- Aljohara's part: Encryption and Decryption --
+        try {
+            Encryptor encrypt = new Encryptor();
+            String cipher = encrypt.encrypt(message, kA); // Encrypt message using shared key
+            String plain = encrypt.decrypt(cipher, kB); // Decrypt message using same key
+
+            // Print results including encryption/decryption
+            System.out.println("\n--- RESULTS ---");
+            System.out.println("q  = " + q);
+            System.out.println("alpha  = " + alpha);
+            System.out.println("Xa = " + Xa);
+            System.out.println("Xb = " + Xb);
+            System.out.println("Ya = " + Ya);
+            System.out.println("Yb = " + Yb);
+            System.out.println("Shared key = " + kA);
+            System.out.println("Original Message  = " + message);
+            System.out.println("Encrypted Message = " + cipher);
+            System.out.println("Decrypted Message = " + plain);
+            System.out.println("Decryption OK = " + plain.equals(message));
+            System.out.println("Secure session established between convoy vehicles and control center.\n");
+
+        } catch (Exception e) {
+            System.out.println("Encryption/Decryption failed: " + e.getMessage());
+        }
     }
 }
