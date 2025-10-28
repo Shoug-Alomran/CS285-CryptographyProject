@@ -144,14 +144,14 @@ public class Main {
 
             // Print results including encryption/decryption
             System.out.println("\n--- RESULTS ---");
-            System.out.println("q  = " + q);
-            System.out.println("alpha  = " + alpha);
+            System.out.println("q = " + q);
+            System.out.println("alpha = " + alpha);
             System.out.println("Xa = " + Xa);
             System.out.println("Xb = " + Xb);
             System.out.println("Ya = " + Ya);
             System.out.println("Yb = " + Yb);
             System.out.println("Shared key = " + kA);
-            System.out.println("Original Message  = " + message);
+            System.out.println("Original Message = " + message);
             System.out.println("Encrypted Message = " + cipher);
             System.out.println("Decrypted Message = " + plain);
             System.out.println("Decryption OK = " + plain.equals(message));
