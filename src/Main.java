@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        System.out.println("=== Royal Convoy - Secure Communication (Diffie–Hellman / ECDH Demo) ===");
+        System.out.println("--- Royal Convoy - Secure Communication (Diffie–Hellman / ECDH Demo) ---");
         System.out.println("This program demonstrates how the control center and vehicles exchange keys securely.\n");
 
         while (true) {
@@ -59,29 +59,35 @@ public class Main {
         System.out.println(
                 "To give an example, both 2 cars and the control center need a safe way to communicate during the royal convoy.");
 
-        // Displays the public parameters (prime q and primitive root α)
+        // Displays the public parameters (prime q and primitive root alpha)
         System.out.println(storage.toString());
 
         System.out.println("The first car chooses a private number Xa = 6 and calculates its public key");
+        System.out.println();
 
-        // Shows how Car 1 calculates its public key using the formula α^Xa mod q
+        // Shows how Car 1 calculates its public key using the formula alpha^Xa mod q
         System.out.println("Ya = alpha^Xa mod q = 5^6 mod 23 = " + Ya + ".");
+        System.out.println();
 
         System.out.println("Car 2 chooses a private number Xb = 15 and calculates its public key");
+        System.out.println();
 
-        // Shows how Car 2 calculates its public key using the formula α^Xb mod q
+        // Shows how Car 2 calculates its public key using the formula alpha^Xb mod q
         System.out.println("Yb = alpha^Xb mod q = 5^15 mod 23 = " + Yb + ".");
+        System.out.println();
 
         System.out.println("They exchange their public keys Ya and Yb.");
 
         // Explains that both sides will now compute their shared secret key
         System.out.println("Each car calculates the shared secret key:");
+        System.out.println();
 
         // Shows Car 1’s shared key computation (Yb^Xa mod q)
         System.out.println("Car 1 computes Yb^Xa mod q = 19^6 mod 23 = " + kA + ".");
 
         // Shows Car 2’s shared key computation (Ya^Xb mod q)
         System.out.println("Car 2 computes Ya^Xb mod q = 8^15 mod 23 = " + kB + ".");
+        System.out.println();
 
         System.out.println("Both cars get the same secret key " + kA
                 + ", which keeps their messages safe so no one can read them.\n");
@@ -109,9 +115,8 @@ public class Main {
         KeyExchange key = new KeyExchange(); // Key exchange instance
 
         if ("b".equals(choice)) {
-            System.out.println("(Reminder) Private keys must be in the inclusive range 1 to q-2.\n");
-            Xa = Helpers.promptPrivateKey(input, q, "Enter private key for Car 1 (1..q-2): ");
-            Xb = Helpers.promptPrivateKey(input, q, "Enter private key for Car 2 (1..q-2): ");
+            Xa = Helpers.promptPrivateKey(input, q, "Enter private key for Car 1: ");
+            Xb = Helpers.promptPrivateKey(input, q, "Enter private key for Car 2: ");
         } else {
             Xa = key.generatePrivateKey(q); // Auto-generate private key for Car 1
             Xb = key.generatePrivateKey(q); // Auto-generate private key for Car 2
