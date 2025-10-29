@@ -78,10 +78,8 @@ Choose an option: 2
 --- Live Mode ---
 You will now choose or generate values used by Diffie-Hellman:
 
-Step 1: Choose a large prime number q (e.g., 23 or 47).
 Enter a prime q (≥ 3): 7
 
-Step 2: Choose alpha (a number between 1 and q).
 Enter alpha (1 < alpha < q): 6
 
 Public Parameters:
@@ -90,7 +88,6 @@ Primitive root (alpha): 6
 
 Auto private keys generated for both cars.
 
-Step 3: Enter the message to be securely sent between vehicles.
 Enter a message (> 20 characters): Please let this project work.
 
 --- RESULTS ---
