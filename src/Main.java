@@ -1,18 +1,22 @@
 import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Scanner;
 
 public class Main {
 
+    private static final SecureRandom random = new SecureRandom();
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        System.out.println("--- Royal Convoy - Secure Communication (Diffie–Hellman / ECDH Demo) ---");
+        System.out.println("--- Royal Convoy - Secure Communication (Diffie-Hellman / ECDH Demo) ---");
         System.out.println("This program demonstrates how the control center and vehicles exchange keys securely.\n");
 
         while (true) {
             System.out.println("MAIN MENU:");
-            System.out.println("1) Numerical Example (Section 1.3 demo)");
-            System.out.println("2) Live Mode (manual / auto private keys)");
+            System.out.println("1) Numerical Example (Section 1.3 demo - fixed values)");
+            System.out.println("2) Numerical Example (auto-generated values)");
+            System.out.println("3) Live Mode (manual / auto parameters and private keys)");
             System.out.println("0) Exit");
             System.out.print("Choose an option: ");
 
@@ -20,9 +24,12 @@ public class Main {
 
             switch (choice) {
                 case "1":
-                    runNumericalExample();
+                    runFixedExample(); // same values as report
                     break;
                 case "2":
+                    runRandomExample(); // auto random example
+                    break;
+                case "3":
                     runLiveMode(input);
                     break;
                 case "0":
@@ -30,170 +37,161 @@ public class Main {
                     input.close();
                     return;
                 default:
-                    System.out.println("Invalid choice. Please enter 1, 2, or 0.\n");
+                    System.out.println("Invalid choice. Please enter 1, 2, 3, or 0.\n");
                     break;
             }
         }
     }
 
-    // Example from Section 1.3 (Fai)
-    private static void runNumericalExample() {
-        System.out.println("\n--- Numerical Example (Section 1.3) ---");
+    // ─────────────── Numerical Example – Fixed (as in report) ───────────────
+    private static void runFixedExample() {
+        System.out.println("\n--- Numerical Example (Section 1.3 - Fixed) ---");
 
-        // Values from the example
-        BigInteger q = BigInteger.valueOf(23); // Large prime number
-        BigInteger alpha = BigInteger.valueOf(5); // Primitive root mod q
-        Parameters storage = new Parameters(q, alpha); // Store q and alpha.
+        // Public parameters
+        BigInteger q = BigInteger.valueOf(23);
+        BigInteger alpha = BigInteger.valueOf(5);
+        Parameters storage = new Parameters(q, alpha);
 
-        BigInteger Xa = BigInteger.valueOf(6); // Private key for Car 1
-        BigInteger Xb = BigInteger.valueOf(15); // Private key for Car 2
+        // Private keys
+        BigInteger Xa = BigInteger.valueOf(6);
+        BigInteger Xb = BigInteger.valueOf(15);
 
         // Public keys
-        BigInteger Ya = alpha.modPow(Xa, q); // 5^6 mod 23 = 8
-        BigInteger Yb = alpha.modPow(Xb, q); // 5^15 mod 23 = 19
+        BigInteger Ya = alpha.modPow(Xa, q);
+        BigInteger Yb = alpha.modPow(Xb, q);
 
         // Shared secrets
-        BigInteger kA = Yb.modPow(Xa, q); // 19^6 mod 23 = 2
-        BigInteger kB = Ya.modPow(Xb, q); // 8^15 mod 23 = 2
+        BigInteger kA = Yb.modPow(Xa, q);
+        BigInteger kB = Ya.modPow(Xb, q);
 
-        // Prints the intro of the scenario described in Section 1.3 of the report
-        System.out.println(
-                "To give an example, both 2 cars and the control center need a safe way to communicate during the royal convoy.");
-
-        // Displays the public parameters (prime q and primitive root alpha)
+        System.out.println("To give an example, both 2 cars and the control center need a safe way to communicate.");
         System.out.println(storage.toString());
+        System.out.println("Car 1 chooses Xa = 6 → Ya = 5^6 mod 23 = " + Ya);
+        System.out.println("Car 2 chooses Xb = 15 → Yb = 5^15 mod 23 = " + Yb);
+        System.out.println("Each car computes the shared key:");
+        System.out.println("Car 1: 19^6 mod 23 = " + kA);
+        System.out.println("Car 2: 8^15 mod 23 = " + kB);
+        System.out.println("Both cars share the same key: " + kA + "\n");
 
-        System.out.println("The first car chooses a private number Xa = 6 and calculates its public key");
-        System.out.println();
-
-        // Shows how Car 1 calculates its public key using the formula alpha^Xa mod q
-        System.out.println("Ya = alpha^Xa mod q = 5^6 mod 23 = " + Ya + ".");
-        System.out.println();
-
-        System.out.println("Car 2 chooses a private number Xb = 15 and calculates its public key");
-        System.out.println();
-
-        // Shows how Car 2 calculates its public key using the formula alpha^Xb mod q
-        System.out.println("Yb = alpha^Xb mod q = 5^15 mod 23 = " + Yb + ".");
-        System.out.println();
-
-        System.out.println("They exchange their public keys Ya and Yb.");
-
-        // Explains that both sides will now compute their shared secret key
-        System.out.println("Each car calculates the shared secret key:");
-        System.out.println();
-
-        // Shows Car 1’s shared key computation (Yb^Xa mod q)
-        System.out.println("Car 1 computes Yb^Xa mod q = 19^6 mod 23 = " + kA + ".");
-
-        // Shows Car 2’s shared key computation (Ya^Xb mod q)
-        System.out.println("Car 2 computes Ya^Xb mod q = 8^15 mod 23 = " + kB + ".");
-        System.out.println();
-
-        System.out.println("Both cars get the same secret key " + kA
-                + ", which keeps their messages safe so no one can read them.\n");
+        String message = "Royal convoy message remains secure through shared key exchange.";
+        System.out.println("Example message: " + message);
+        try {
+            Encryptor enc = new Encryptor();
+            String cipher = enc.encrypt(message, kA);
+            String plain = enc.decrypt(cipher, kB);
+            System.out.println("Encrypted Message = " + cipher);
+            System.out.println("Decrypted Message = " + plain);
+            System.out.println("Decryption OK = " + plain.equals(message) + "\n");
+        } catch (Exception e) {
+            System.out.println("Encryption/Decryption failed: " + e.getMessage());
+        }
     }
 
+    // ─────────────── Numerical Example – Random ───────────────
+    private static void runRandomExample() {
+        System.out.println("\n--- Numerical Example (Auto-generated values) ---");
+
+        // Generate random public parameters
+        BigInteger q = BigInteger.probablePrime(8, random); // random small prime for demo
+        BigInteger alpha = BigInteger.valueOf(random.nextInt(3, q.intValue() - 1));
+        Parameters storage = new Parameters(q, alpha);
+
+        // Generate private keys
+        BigInteger Xa = BigInteger.valueOf(random.nextInt(2, q.intValue() - 2));
+        BigInteger Xb = BigInteger.valueOf(random.nextInt(2, q.intValue() - 2));
+
+        // Compute keys
+        BigInteger Ya = alpha.modPow(Xa, q);
+        BigInteger Yb = alpha.modPow(Xb, q);
+        BigInteger kA = Yb.modPow(Xa, q);
+        BigInteger kB = Ya.modPow(Xb, q);
+
+        System.out.println("Automatically generated example parameters and results:");
+        System.out.println(storage.toString());
+        System.out.println("Car 1 (Xa): " + Xa + " --> Ya = " + Ya);
+        System.out.println("Car 2 (Xb): " + Xb + " --> Yb = " + Yb);
+        System.out.println("Shared key for Car 1: " + kA);
+        System.out.println("Shared key for Car 2: " + kB);
+        System.out.println("Keys match: " + kA.equals(kB) + "\n");
+
+    }
+
+    // ─────────────── Live Mode (manual or auto q, alpha, and keys) ───────────────
     private static void runLiveMode(Scanner input) {
         System.out.println("\n--- Live Mode ---");
-        System.out.println("You will now choose or generate values used by Diffie-Hellman:\n");
+        System.out.println("You can either enter your own values for q and alpha, or let the program generate them.\n");
 
-        BigInteger q = Helpers.promptPrime(input); // Prompt for prime q (≥ 3)
-        BigInteger alpha = Helpers.promptAlpha(input, q); // Prompt for alpha (1 < alpha < q)
+        System.out.println("Choose parameter mode:");
+        System.out.println("a) Auto-generate q and alpha");
+        System.out.println("b) Enter manually");
+        System.out.print("Your choice (a/b): ");
+        String paramChoice = input.nextLine().trim().toLowerCase();
 
-        Parameters storage = new Parameters(q, alpha); // Store q and alpha.
-        System.out.println("\n" + storage); // Display chosen parameters
+        BigInteger q, alpha;
 
-        System.out.println("\nChoose private-key mode:");
+        if ("b".equals(paramChoice)) {
+            q = Helpers.promptPrime(input);
+            alpha = Helpers.promptAlpha(input, q);
+        } else {
+            q = BigInteger.probablePrime(8, random); // generate small prime
+            alpha = BigInteger.valueOf(random.nextInt(3, q.intValue() - 1));
+            System.out.println("Automatically generated parameters:");
+            System.out.println("q = " + q + ", alpha = " + alpha + "\n");
+        }
+
+        Parameters storage = new Parameters(q, alpha);
+        System.out.println(storage + "\n");
+
+        // Choose private-key mode
+        System.out.println("Choose private-key mode:");
         System.out.println("a) Auto-generate private keys");
         System.out.println("b) Enter private keys manually");
         System.out.print("Your choice (a/b): ");
-        String choice = input.nextLine().trim().toLowerCase();
+        String keyChoice = input.nextLine().trim().toLowerCase();
 
-        BigInteger Ya, Yb, kA, kB;
-
-        if ("b".equals(choice)) {
-            // Manual branch: compute with direct math
-            BigInteger Xa = Helpers.promptPrivateKey(input, q, "Enter private key for Car 1: ");
-            BigInteger Xb = Helpers.promptPrivateKey(input, q, "Enter private key for Car 2: ");
-
-            // Manual computation of public keys and shared keys
-            Ya = alpha.modPow(Xa, q);
-            Yb = alpha.modPow(Xb, q);
-
-            kA = Yb.modPow(Xa, q);
-            kB = Ya.modPow(Xb, q);
-
-            if (!kA.equals(kB)) {
-                System.out.println("Shared keys do not match. Please try again.\n");
-                return;
-            }
-
-            String message = Helpers.promptMessage(input); // Prompt for message (> 20 characters)
-
-            // --- Aljohara's part: Encryption and Decryption --
-            try {
-                Encryptor enc = new Encryptor();
-                String cipher = enc.encrypt(message, kA);
-                String plain = enc.decrypt(cipher, kB);
-
-                System.out.println("\n--- RESULTS ---");
-                System.out.println("q  = " + q);
-                System.out.println("alpha  = " + alpha);
-                System.out.println("Xa = " + Xa);
-                System.out.println("Xb = " + Xb);
-                System.out.println("Ya = " + Ya);
-                System.out.println("Yb = " + Yb);
-                System.out.println("Shared key = " + kA);
-                System.out.println("Original Message  = " + message);
-                System.out.println("Encrypted Message = " + cipher);
-                System.out.println("Decrypted Message = " + plain);
-                System.out.println("Decryption OK = " + plain.equals(message));
-                System.out.println("Secure session established between convoy vehicles and control center.\n");
-            } catch (Exception e) {
-                System.out.println("Encryption/Decryption failed: " + e.getMessage());
-            }
-
+        BigInteger Xa, Xb;
+        if ("b".equals(keyChoice)) {
+            Xa = Helpers.promptPrivateKey(input, q, "Enter private key for Car 1: ");
+            Xb = Helpers.promptPrivateKey(input, q, "Enter private key for Car 2: ");
         } else {
-            // --- Auto branch: demonstrate Fai’s KeyExchange(q, alpha) objects ---
-            KeyExchange car1 = new KeyExchange(q, alpha); // auto private key inside constructor
-            KeyExchange car2 = new KeyExchange(q, alpha); // auto private key inside constructor
+            Xa = BigInteger.valueOf(random.nextInt(2, q.intValue() - 2));
+            Xb = BigInteger.valueOf(random.nextInt(2, q.intValue() - 2));
+            System.out.println("Auto private keys generated: Xa = " + Xa + ", Xb = " + Xb + "\n");
+        }
 
-            Ya = car1.getPublicKey();
-            Yb = car2.getPublicKey();
+        // Compute keys
+        BigInteger Ya = alpha.modPow(Xa, q);
+        BigInteger Yb = alpha.modPow(Xb, q);
+        BigInteger kA = Yb.modPow(Xa, q);
+        BigInteger kB = Ya.modPow(Xb, q);
 
-            kA = car1.computeSharedKey(Yb);
-            kB = car2.computeSharedKey(Ya);
+        if (!kA.equals(kB)) {
+            System.out.println("Shared keys do not match. Please try again.\n");
+            return;
+        }
 
-            if (!kA.equals(kB)) {
-                System.out.println("Shared keys do not match. Please try again.\n");
-                return;
-            }
+        String message = Helpers.promptMessage(input);
+        try {
+            Encryptor enc = new Encryptor();
+            String cipher = enc.encrypt(message, kA);
+            String plain = enc.decrypt(cipher, kB);
 
-            String message = Helpers.promptMessage(input); // Prompt for message (> 20 characters)
+            System.out.println("\n--- RESULTS ---");
+            System.out.println("q = " + q);
+            System.out.println("alpha = " + alpha);
+            System.out.println("Xa = " + Xa);
+            System.out.println("Xb = " + Xb);
+            System.out.println("Ya = " + Ya);
+            System.out.println("Yb = " + Yb);
+            System.out.println("Shared key = " + kA);
+            System.out.println("Original Message = " + message);
+            System.out.println("Encrypted Message = " + cipher);
+            System.out.println("Decrypted Message = " + plain);
+            System.out.println("Decryption OK = " + plain.equals(message));
+            System.out.println("Secure session established between convoy vehicles and control center.\n");
 
-            // --- Aljohara's part: Encryption and Decryption --
-            try {
-                Encryptor enc = new Encryptor();
-                String cipher = enc.encrypt(message, kA);
-                String plain = enc.decrypt(cipher, kB);
-
-                System.out.println("\n--- RESULTS ---");
-                System.out.println("q  = " + q);
-                System.out.println("alpha  = " + alpha);
-                System.out.println("Xa = " + car1.getPrivateKey());
-                System.out.println("Xb = " + car2.getPrivateKey());
-                System.out.println("Ya = " + Ya);
-                System.out.println("Yb = " + Yb);
-                System.out.println("Shared key = " + kA);
-                System.out.println("Original Message  = " + message);
-                System.out.println("Encrypted Message = " + cipher);
-                System.out.println("Decrypted Message = " + plain);
-                System.out.println("Decryption OK = " + plain.equals(message));
-                System.out.println("Secure session established between convoy vehicles and control center.\n");
-            } catch (Exception e) {
-                System.out.println("Encryption/Decryption failed: " + e.getMessage());
-            }
+        } catch (Exception e) {
+            System.out.println("Encryption/Decryption failed: " + e.getMessage());
         }
     }
 }
