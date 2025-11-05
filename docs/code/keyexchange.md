@@ -1,5 +1,4 @@
-```java
-title="KeyExchange.java"
+```java title="KeyExchange.java"
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
@@ -13,7 +12,7 @@ public class KeyExchange extends Parameters {
 
     // Constructor calls Parameters constructor and generates both keys
     public KeyExchange(BigInteger q, BigInteger alpha) {
-        super(q, alpha); 
+        super(q, alpha);
         generateKeys(); // Generate public and private keys when object is created
     }
 
