@@ -63,11 +63,11 @@ The project demonstrates how two parties can securely generate a shared secret k
 
 ---
 
-## 📘 Documentation
+## Documentation
 
 You can view the full project documentation (code overview, results, and team credits) here:
 
-🔗 **Live Site:** [CS285 – Secure Key Exchange Project Docs](https://shoug-alomran.github.io/CS285-CryptographyProject/)
+**Live Site:** [CS285 – Secure Key Exchange Project Docs](https://shoug-alomran.github.io/CS285-CryptographyProject/)
 
 [![Build & Deploy MkDocs](https://github.com/Shoug-Alomran/CS285-CryptographyProject/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/Shoug-Alomran/CS285-CryptographyProject/actions/workflows/mkdocs.yml)
 
