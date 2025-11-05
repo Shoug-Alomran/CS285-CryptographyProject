@@ -1,0 +1,37 @@
+site_name: CS285 – Secure Key Exchange Project
+site_description: Implementation and Analysis of the Diffie–Hellman Key Exchange Algorithm in Java
+site_author: Shoug Fawaz Alomran
+repo_url: https://github.com/Shoug-Alomran/CS285-CryptographyProject
+repo_name: CS285 Cryptography Project
+copyright: "© 2025 Prince Sultan University"
+
+theme:
+  name: material
+  language: en
+  palette:
+    primary: teal
+    accent: deep orange
+  font:
+    text: Inter
+    code: Fira Code
+  features:
+    - navigation.instant
+    - navigation.expand
+    - toc.integrate
+    - content.code.copy
+    - content.code.annotate
+
+nav:
+  - Home: index.md
+  - About the Project: about.md
+  - Code Overview:
+      - Main.java: code/main.md
+      - Parameters.java: code/parameters.md
+      - KeyExchange.java: code/keyexchange.md
+      - Encryptor.java: code/encryptor.md
+      - Helpers.java: code/helpers.md
+      - Validator.java: code/validator.md
+      - Utils.java: code/utils.md
+  - Results and Test Cases: results.md
+  - Team Contribution: team.md
+  - References: references.md
