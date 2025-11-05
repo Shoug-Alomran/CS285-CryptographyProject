@@ -1,3 +1,4 @@
+```java
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Scanner;
@@ -14,7 +15,7 @@ public class Helpers {
                     return q;
                 System.out.println("That's not a prime number. Try again.\n");
             } catch (Exception e) {
-                System.out.println("Invalid input. Please type a integer.\n");
+                System.out.println("Invalid input. Please type an integer.\n");
             }
         }
     }
@@ -34,8 +35,7 @@ public class Helpers {
         }
     }
 
-    // 3. Prompt for private keys in the inclusive range [1 .. q−2]. Re-prompts
-    // until valid.
+    // 3. Prompt for private keys in the inclusive range [1 .. q−2]. Re-prompts until valid.
     public static BigInteger promptPrivateKey(Scanner input, BigInteger q, String message) {
         System.out.println("\nPrivate keys must be integers between 1 and q-2 (inclusive).");
         BigInteger min = BigInteger.ONE;
@@ -43,7 +43,7 @@ public class Helpers {
         while (true) {
             try {
                 System.out.print(message);
-                BigInteger privateKey = new BigInteger(input.nextLine().trim()); // Read input
+                BigInteger privateKey = new BigInteger(input.nextLine().trim());
                 if (privateKey.compareTo(min) >= 0 && privateKey.compareTo(max) <= 0)
                     return privateKey;
                 System.out.println("Invalid range. Please enter a value between 1 and q-2.\n");
@@ -55,20 +55,14 @@ public class Helpers {
 
     // 4. Generate a random private key in [1 .. q−2].
     public static BigInteger randomPrivateKey(BigInteger q, SecureRandom randomNo) {
-        BigInteger privateKey; // Placeholder for the generated key
+        BigInteger privateKey;
         BigInteger min = BigInteger.ONE;
         BigInteger max = q.subtract(BigInteger.TWO); // q - 2
 
         while (true) {
-            // Picks a random integer smaller than q
-            privateKey = new BigInteger(q.toString()).abs(); // Generate random BigInteger (the abs() ensures
-                                                             // non-negative)
-
-            // If it's between 1 and q-2, we accept it
-            if (privateKey.compareTo(min) >= 0 && privateKey.compareTo(max) <= 0) {
+            privateKey = new BigInteger(q.toString()).abs();
+            if (privateKey.compareTo(min) >= 0 && privateKey.compareTo(max) <= 0)
                 return privateKey;
-            }
-            // Otherwise, try again
         }
     }
 
