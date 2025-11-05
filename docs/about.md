@@ -13,9 +13,17 @@ The Diffie–Hellman (DH) key exchange lets two parties **establish a shared sec
     Two cars and the control center agree on \( q \) and \( \alpha \), exchange public values, and arrive at
     the **same** secret key used to keep their messages private.
 
-## Advantages & Limitations (concise)
-**Pros:** no pre-shared secret, forward secrecy (with fresh keys), strong math (discrete log).  
-**Cons:** MitM without authentication, weak/recurring parameters reduce security, higher computational cost than symmetric crypto.
+## Advantages & Limitations
+
+| **Advantages** | **Limitations** |
+|-----------------|----------------|
+| **No Pre-shared Secret** — Allows secure key generation without needing a prior exchange or secret. | **Man-in-the-Middle Attacks** — Vulnerable without proper authentication mechanisms, since DH alone does not verify identities. |
+| **Forward Secrecy** — Previous messages remain secure even if long-term private keys are compromised. | **Parameter Reuse** — Using weak or repeated prime numbers or generators reduces overall security. |
+| **Mathematical Foundation** — Relies on the computational hardness of the discrete logarithm problem, which is infeasible to reverse for large primes. | **Computational Cost** — Slower than symmetric key algorithms, especially on low-end or embedded devices. |
+| **Widely Adopted** — Forms the basis of many secure protocols (e.g., TLS, SSH, VPNs) and is straightforward to implement. | **No Authentication** — The original Diffie–Hellman protocol does not include identity verification between participants. |
+
+!!! note "Summary"
+    The Diffie–Hellman algorithm provides strong mathematical security and key independence but requires additional authentication mechanisms to protect against interception.
 
 ## Implementation Notes
 - Language: **Java 17+**
