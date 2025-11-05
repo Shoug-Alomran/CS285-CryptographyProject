@@ -24,10 +24,10 @@ public class Main {
 
             switch (choice) {
                 case "1":
-                    runFixedExample(); // same values as report
+                    runFixedExample();
                     break;
                 case "2":
-                    runRandomExample(); // auto random example
+                    runRandomExample(input);
                     break;
                 case "3":
                     runLiveMode(input);
@@ -47,20 +47,16 @@ public class Main {
     private static void runFixedExample() {
         System.out.println("\n--- Numerical Example (Section 1.3 - Fixed) ---");
 
-        // Public parameters
         BigInteger q = BigInteger.valueOf(23);
         BigInteger alpha = BigInteger.valueOf(5);
         Parameters storage = new Parameters(q, alpha);
 
-        // Private keys
         BigInteger Xa = BigInteger.valueOf(6);
         BigInteger Xb = BigInteger.valueOf(15);
 
-        // Public keys
         BigInteger Ya = alpha.modPow(Xa, q);
         BigInteger Yb = alpha.modPow(Xb, q);
 
-        // Shared secrets
         BigInteger kA = Yb.modPow(Xa, q);
         BigInteger kB = Ya.modPow(Xb, q);
 
@@ -88,19 +84,16 @@ public class Main {
     }
 
     // ─────────────── Numerical Example – Random ───────────────
-    private static void runRandomExample() {
+    private static void runRandomExample(Scanner input) {
         System.out.println("\n--- Numerical Example (Auto-generated values) ---");
 
-        // Generate random public parameters
-        BigInteger q = BigInteger.probablePrime(8, random); // random small prime for demo
+        BigInteger q = BigInteger.probablePrime(8, random);
         BigInteger alpha = BigInteger.valueOf(random.nextInt(3, q.intValue() - 1));
         Parameters storage = new Parameters(q, alpha);
 
-        // Generate private keys
         BigInteger Xa = BigInteger.valueOf(random.nextInt(2, q.intValue() - 2));
         BigInteger Xb = BigInteger.valueOf(random.nextInt(2, q.intValue() - 2));
 
-        // Compute keys
         BigInteger Ya = alpha.modPow(Xa, q);
         BigInteger Yb = alpha.modPow(Xb, q);
         BigInteger kA = Yb.modPow(Xa, q);
@@ -114,6 +107,20 @@ public class Main {
         System.out.println("Shared key for Car 2: " + kB);
         System.out.println("Keys match: " + kA.equals(kB) + "\n");
 
+        // 🔹 Allow user to enter a message for encryption even in auto mode
+        String message = Helpers.promptMessage(input);
+        try {
+            Encryptor enc = new Encryptor();
+            String cipher = enc.encrypt(message, kA);
+            String plain = enc.decrypt(cipher, kB);
+            System.out.println("--- Encryption Test ---");
+            System.out.println("Original Message  = " + message);
+            System.out.println("Encrypted Message = " + cipher);
+            System.out.println("Decrypted Message = " + plain);
+            System.out.println("Decryption OK = " + plain.equals(message) + "\n");
+        } catch (Exception e) {
+            System.out.println("Encryption/Decryption failed: " + e.getMessage());
+        }
     }
 
     // ─────────────── Live Mode (manual or auto q, alpha, and keys) ───────────────
@@ -133,7 +140,7 @@ public class Main {
             q = Helpers.promptPrime(input);
             alpha = Helpers.promptAlpha(input, q);
         } else {
-            q = BigInteger.probablePrime(8, random); // generate small prime
+            q = BigInteger.probablePrime(8, random);
             alpha = BigInteger.valueOf(random.nextInt(3, q.intValue() - 1));
             System.out.println("Automatically generated parameters:");
             System.out.println("q = " + q + ", alpha = " + alpha + "\n");
@@ -142,7 +149,6 @@ public class Main {
         Parameters storage = new Parameters(q, alpha);
         System.out.println(storage + "\n");
 
-        // Choose private-key mode
         System.out.println("Choose private-key mode:");
         System.out.println("a) Auto-generate private keys");
         System.out.println("b) Enter private keys manually");
@@ -159,7 +165,6 @@ public class Main {
             System.out.println("Auto private keys generated: Xa = " + Xa + ", Xb = " + Xb + "\n");
         }
 
-        // Compute keys
         BigInteger Ya = alpha.modPow(Xa, q);
         BigInteger Yb = alpha.modPow(Xb, q);
         BigInteger kA = Yb.modPow(Xa, q);
@@ -170,6 +175,7 @@ public class Main {
             return;
         }
 
+        // 🔹 Always allow message input regardless of parameter mode
         String message = Helpers.promptMessage(input);
         try {
             Encryptor enc = new Encryptor();
