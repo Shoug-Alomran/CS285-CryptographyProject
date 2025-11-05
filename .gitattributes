@@ -1,0 +1,4 @@
+docs/** linguist-documentation
+overrides/** linguist-documentation
+*.md linguist-documentation
+mkdocs.yml linguist-documentation
