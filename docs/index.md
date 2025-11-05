@@ -1,9 +1,10 @@
 # CS285 – Secure Key Exchange Project
 
-### Prince Sultan University  
+### Prince Sultan University
+
 **Course:** CS285 – Discrete Mathematics for Computing  
 **Project Title:** Secure Key Exchange System (Diffie–Hellman Demonstration)  
-**Instructor:** Dr. Jalila Zouhair
+**Instructor:** Dr. Jalila Zouhair  
 **Submission Date:** 9 November 2025  
 
 **Developed by:**  
@@ -17,10 +18,10 @@
 ## Abstract
 
 This project demonstrates how two entities can securely establish a shared secret key using **public-key cryptography principles**.  
-The implemented system applies the **Diffie–Hellman key exchange algorithm**, which enables the participants to exchange information over an insecure channel without directly transmitting any secret values.  
+The implemented system applies the **Diffie–Hellman key exchange algorithm**, which enables the participants to exchange information over an insecure channel without directly transmitting any secret values.
 
 The resulting shared secret key can then be used to **encrypt and decrypt messages**, ensuring data confidentiality and integrity.  
-This simulation also includes **input validation**, **error handling**, and the ability to operate in two modes: a numerical example (for demonstration) and a live mode (for user interaction).
+This simulation also includes **input validation**, **error handling**, and the ability to operate in two modes: a **numerical example** (for demonstration) and a **live mode** (for user interaction).
 
 ---
 
