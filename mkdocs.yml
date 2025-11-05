@@ -6,9 +6,8 @@ theme:
   name: material
   language: en
   features:
-    - navigation.top
-    - navigation.sections
     - content.code.copy
+    # tip: add "navigation.expand" if you want groups opened by default
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
