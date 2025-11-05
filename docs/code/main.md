@@ -1,4 +1,5 @@
-```java title="Main.java"
+```java
+title="Main.java"
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Scanner;
