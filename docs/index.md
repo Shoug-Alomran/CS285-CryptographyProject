@@ -1,7 +1,8 @@
 # Implementation & Analysis of the Diffie–Hellman Key Exchange (Java)
 
 **College of Computer and Information Sciences (CCIS) — CS285: Discrete Mathematics for Computing**  
-**Course Instructor:** Dr. Jalila Zouhair • **Section:** 963
+**Course Instructor:** Dr. Jalila Zouhair 
+**Section:** 963
 
 > This site presents our Java implementation of the Diffie–Hellman (DH) key exchange with a lightweight
 > message encryption demo. It includes background, code, results, and the full team contribution.
