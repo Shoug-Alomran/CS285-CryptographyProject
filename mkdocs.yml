@@ -1,4 +1,4 @@
-site_name: CS285 - Secure Key Exchange Project
+site_name: CS285 – Secure Key Exchange Project
 site_description: Java implementation, docs, results, and team credits
 site_url: https://shoug-alomran.github.io/CS285-CryptographyProject/
 
@@ -8,6 +8,7 @@ theme:
   features:
     - navigation.top
     - navigation.sections
+    - navigation.expand
     - content.code.copy
   palette:
     - media: "(prefers-color-scheme: light)"
