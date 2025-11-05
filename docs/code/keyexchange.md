@@ -1,4 +1,3 @@
-```java title="KeyExchange.java"
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
