@@ -62,7 +62,6 @@ Although the numbers are small, the logic mirrors real-world key exchange system
 
 To provide broader context, this diagram compares the **traditional Diffie–Hellman (DH)** and **Elliptic Curve Diffie–Hellman (ECDH)** methods.
 
-
 !!! note "Summary"
     Both algorithms achieve the same goal — establishing a shared secret key over an insecure channel.  
     However, **ECDH provides greater efficiency and stronger security with smaller key sizes**, making it the preferred approach in most modern cryptographic protocols.
