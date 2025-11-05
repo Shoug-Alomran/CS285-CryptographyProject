@@ -1,3 +1,4 @@
+```bash
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
@@ -34,3 +35,4 @@ public class Utils {
         return bytes;
     }
 }
+```

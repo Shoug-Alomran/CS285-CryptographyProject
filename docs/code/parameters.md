@@ -1,3 +1,4 @@
+```bash
 import java.math.BigInteger;
 
 public class Parameters {
@@ -29,3 +30,4 @@ public class Parameters {
                "Primitive root (alpha): " + alpha;
     }
 }
+```

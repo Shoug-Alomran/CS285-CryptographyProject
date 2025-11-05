@@ -10,6 +10,7 @@ It demonstrates how two participants can securely establish a shared secret key 
 ## Purpose of the Project
 
 The project’s objective is to:
+
 1. Apply mathematical concepts of modular arithmetic and discrete logarithms.  
 2. Demonstrate secure key exchange using the **Diffie–Hellman algorithm**.  
 3. Illustrate how the shared key enables message encryption and decryption.  

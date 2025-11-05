@@ -1,3 +1,4 @@
+```bash
 import java.math.BigInteger;
 import java.util.Base64;
 import java.security.MessageDigest;
@@ -52,3 +53,4 @@ public class Encryptor {
         }
     }
 }
+```

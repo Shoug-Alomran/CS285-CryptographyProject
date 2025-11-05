@@ -1,4 +1,4 @@
-site_name: CS285 – Secure Key Exchange Project
+site_name: CS285 - Secure Key Exchange Project
 site_description: Java implementation, docs, results, and team credits
 site_url: https://shoug-alomran.github.io/CS285-CryptographyProject/
 
@@ -6,8 +6,8 @@ theme:
   name: material
   language: en
   features:
+    - navigation.top
     - content.code.copy
-    # tip: add "navigation.expand" if you want groups opened by default
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -33,6 +33,7 @@ nav:
   - Advantages & Limitations: advantages-limitations.md
   - Conclusion: conclusion.md
   - References: references.md
+  - Team: team.md
   - Code:
       - Main: code/main.md
       - Key Exchange: code/keyexchange.md
@@ -43,18 +44,19 @@ nav:
       - Utils: code/utils.md
 
 markdown_extensions:
-  - markdown.extensions.admonition
-  - markdown.extensions.toc:
+  - admonition
+  - toc:
       permalink: true
-  - markdown.extensions.attr_list
-  - pymdownx.highlight:
-      linenums: true
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
+  - pymdownx.highlight
   - pymdownx.superfences
   - pymdownx.inlinehilite
+  - pymdownx.arithmatex:
+      generic: true
+  - attr_list
+  - md_in_html
 
 extra_javascript:
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css

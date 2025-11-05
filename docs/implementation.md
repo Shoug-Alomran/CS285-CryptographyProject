@@ -51,27 +51,48 @@ The system provides two modes for demonstration:
 ## Example Console Interaction
 
 ```bash
---- Secure Key Exchange System ---
-Enter a prime q (≥ 3): 7
-Enter alpha (1 < alpha < q): 6
+--- Royal Convoy - Secure Communication (Diffie–Hellman / ECDH Demo) ---
+This program demonstrates how the control center and vehicles exchange keys securely.
+
+MAIN MENU:
+1) Numerical Example (Section 1.3 demo - fixed values)
+2) Numerical Example (auto-generated values)
+3) Live Mode (manual / auto parameters and private keys)
+0) Exit
+Choose an option: 3
+
+--- Live Mode ---
+You can either enter your own values for q and alpha, or let the program generate them.
+
+Choose parameter mode:
+a) Auto-generate q and alpha
+b) Enter manually
+Your choice (a/b): a
+Automatically generated parameters:
+q = 199, alpha = 7
 
 Public Parameters:
-Prime (q): 7
-Primitive Root (alpha): 6
+Prime number (q): 199
+Primitive root (alpha): 7
 
-Auto private keys generated for both participants.
+Choose private-key mode:
+a) Auto-generate private keys
+b) Enter private keys manually
+Your choice (a/b): a
+Auto private keys generated: Xa = 53, Xb = 121
 
 Enter a message (> 20 characters): Please let this project work.
 
 --- RESULTS ---
-q = 7
-alpha = 6
-Xa = 5
-Xb = 3
-Ya = 6
-Yb = 1
-Shared key = 1
+q = 199
+alpha = 7
+Xa = 53
+Xb = 121
+Ya = 7^53 mod 199 = 118
+Yb = 7^121 mod 199 = 62
+Shared key = 7
 Original Message  = Please let this project work.
 Encrypted Message = Jhs7D0vPYnq0...
 Decrypted Message = Please let this project work.
 Decryption OK = true
+```

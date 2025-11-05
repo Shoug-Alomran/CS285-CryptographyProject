@@ -1,3 +1,4 @@
+```bash
 import java.math.BigInteger;
 
 /**
@@ -25,3 +26,4 @@ public class Validator {
         return message != null && message.trim().length() > 20;
     }
 }
+```
