@@ -31,7 +31,7 @@ nav:
   - References: references.md
   - Team: team.md
   - Code:
-      - Overview: code/main.md
+      - Overview: code/index.md
       - Key Exchange: code/keyexchange.md
       - Encryptor: code/encryptor.md
       - Parameters: code/parameters.md
