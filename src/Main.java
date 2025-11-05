@@ -175,7 +175,7 @@ public class Main {
             return;
         }
 
-        // 🔹 Always allow message input regardless of parameter mode
+        // Always allow message input regardless of parameter mode
         String message = Helpers.promptMessage(input);
         try {
             Encryptor enc = new Encryptor();
