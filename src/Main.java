@@ -107,7 +107,7 @@ public class Main {
         System.out.println("Shared key for Car 2: " + kB);
         System.out.println("Keys match: " + kA.equals(kB) + "\n");
 
-        // 🔹 Allow user to enter a message for encryption even in auto mode
+        // Allow user to enter a message for encryption even in auto mode
         String message = Helpers.promptMessage(input);
         try {
             Encryptor enc = new Encryptor();
