@@ -8,6 +8,7 @@ theme:
   features:
     - navigation.top
     - navigation.sections
+    - navigation.expand
     - content.code.copy
   palette:
     - media: "(prefers-color-scheme: light)"
