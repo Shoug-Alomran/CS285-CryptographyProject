@@ -1,4 +1,4 @@
-```java
+```java title="KeyExchange.java"
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
@@ -10,32 +10,34 @@ public class KeyExchange extends Parameters {
     private BigInteger privateKey;
     private BigInteger publicKey;
 
+    // Constructor calls Parameters constructor and generates both keys
     public KeyExchange(BigInteger q, BigInteger alpha) {
-        super(q, alpha); // call Parameters class constructor
-        generateKeys(); // generate public and private keys when object is created
+        super(q, alpha); 
+        generateKeys(); // Generate public and private keys when object is created
     }
 
-    // Generate a random private key and compute corresponding public key
+    // Generate a random private key and corresponding public key
     private void generateKeys() {
-        this.privateKey = new BigInteger(getQ().bitLength(), random).mod(getQ().subtract(BigInteger.TWO))
+        // Generate private key: 1 ≤ x ≤ q−2
+        this.privateKey = new BigInteger(getQ().bitLength(), random)
+                .mod(getQ().subtract(BigInteger.TWO))
                 .add(BigInteger.ONE);
-        // 1 <= x <= q-2
 
+        // Compute public key: Y = α^x mod q
         this.publicKey = getAlpha().modPow(privateKey, getQ());
-        // Y = α^x mod q
     }
 
     // Compute shared key using peer's public key
-
     public BigInteger computeSharedKey(BigInteger otherPublic) {
         return otherPublic.modPow(privateKey, getQ());
     }
 
-    // Getters for the keys
+    // Getter for private key
     public BigInteger getPrivateKey() {
         return privateKey;
     }
 
+    // Getter for public key
     public BigInteger getPublicKey() {
         return publicKey;
     }

@@ -27,9 +27,12 @@ theme:
 nav:
   - Home: index.md
   - About: about.md
+  - Introduction: introduction.md
+  - Implementation: implementation.md
   - Results: results.md
+  - Advantages & Limitations: advantages-limitations.md
+  - Conclusion: conclusion.md
   - References: references.md
-  - Team: team.md
   - Code:
       - Main: code/index.md
       - Key Exchange: code/keyexchange.md

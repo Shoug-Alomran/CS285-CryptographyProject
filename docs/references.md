@@ -6,3 +6,5 @@
 - Ambatipudi, S. (2024). *Cryptographic advancements enabled by Diffie–Hellman*. ISACA Journal.  
 - Odlyzko, A. M. (2014). *Discrete Logarithms in Finite Fields and Their Cryptographic Significance*.  
 - Krawczyk, H. (2005). *HMQV: A High-Performance Secure Diffie–Hellman Protocol*.
+- Alomran, S. F. (2025). *CS285 – Secure Key Exchange Project (Diffie–Hellman Simulation)*.  
+   Available at: [https://github.com/Shoug-Alomran/CS285-CryptographyProject](https://github.com/Shoug-Alomran/CS285-CryptographyProject)

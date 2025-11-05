@@ -1,8 +1,9 @@
-```java
+```java title="Parameters.java"
 import java.math.BigInteger;
 
 public class Parameters {
 
+    // Public parameters
     private BigInteger q;
     private BigInteger alpha;
 
@@ -12,10 +13,12 @@ public class Parameters {
         this.alpha = alpha;
     }
 
+    // Getter for q
     public BigInteger getQ() {
         return q;
     }
 
+    // Getter for alpha
     public BigInteger getAlpha() {
         return alpha;
     }
@@ -23,7 +26,7 @@ public class Parameters {
     @Override
     public String toString() {
         return "Public Parameters:\n" +
-                "Prime number (q): " + q + "\n" +
-                "Primitive root (alpha): " + alpha;
+               "Prime number (q): " + q + "\n" +
+               "Primitive root (alpha): " + alpha;
     }
 }

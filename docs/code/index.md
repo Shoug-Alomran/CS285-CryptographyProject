@@ -1,4 +1,4 @@
-```java
+```java title="Main.java"
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Scanner;
@@ -24,22 +24,15 @@ public class Main {
             String choice = input.nextLine().trim();
 
             switch (choice) {
-                case "1":
-                    runFixedExample();
-                    break;
-                case "2":
-                    runRandomExample(input);
-                    break;
-                case "3":
-                    runLiveMode(input);
-                    break;
-                case "0":
+                case "1" -> runFixedExample();
+                case "2" -> runRandomExample(input);
+                case "3" -> runLiveMode(input);
+                case "0" -> {
                     System.out.println("Goodbye!");
                     input.close();
                     return;
-                default:
-                    System.out.println("Invalid choice. Please enter 1, 2, 3, or 0.\n");
-                    break;
+                }
+                default -> System.out.println("Invalid choice. Please enter 1, 2, 3, or 0.\n");
             }
         }
     }
@@ -57,12 +50,11 @@ public class Main {
 
         BigInteger Ya = alpha.modPow(Xa, q);
         BigInteger Yb = alpha.modPow(Xb, q);
-
         BigInteger kA = Yb.modPow(Xa, q);
         BigInteger kB = Ya.modPow(Xb, q);
 
         System.out.println("To give an example, both 2 cars and the control center need a safe way to communicate.");
-        System.out.println(storage.toString());
+        System.out.println(storage);
         System.out.println("Car 1 chooses Xa = 6 → Ya = 5^6 mod 23 = " + Ya);
         System.out.println("Car 2 chooses Xb = 15 → Yb = 5^15 mod 23 = " + Yb);
         System.out.println("Each car computes the shared key:");
@@ -72,6 +64,7 @@ public class Main {
 
         String message = "Royal convoy message remains secure through shared key exchange.";
         System.out.println("Example message: " + message);
+
         try {
             Encryptor enc = new Encryptor();
             String cipher = enc.encrypt(message, kA);
@@ -101,15 +94,15 @@ public class Main {
         BigInteger kB = Ya.modPow(Xb, q);
 
         System.out.println("Automatically generated example parameters and results:");
-        System.out.println(storage.toString());
+        System.out.println(storage);
         System.out.println("Car 1 (Xa): " + Xa + " --> Ya = " + Ya);
         System.out.println("Car 2 (Xb): " + Xb + " --> Yb = " + Yb);
         System.out.println("Shared key for Car 1: " + kA);
         System.out.println("Shared key for Car 2: " + kB);
         System.out.println("Keys match: " + kA.equals(kB) + "\n");
 
-        // Allow user to enter a message for encryption even in auto mode
         String message = Helpers.promptMessage(input);
+
         try {
             Encryptor enc = new Encryptor();
             String cipher = enc.encrypt(message, kA);
@@ -176,8 +169,8 @@ public class Main {
             return;
         }
 
-        // Always allow message input regardless of parameter mode
         String message = Helpers.promptMessage(input);
+
         try {
             Encryptor enc = new Encryptor();
             String cipher = enc.encrypt(message, kA);
