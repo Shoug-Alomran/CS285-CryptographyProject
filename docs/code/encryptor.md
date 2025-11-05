@@ -1,5 +1,3 @@
-```java
-title="Encryptor.java"
 import java.math.BigInteger;
 import java.util.Base64;
 import java.security.MessageDigest;

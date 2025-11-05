@@ -1,5 +1,3 @@
-```java
-title="Validator.java"
 import java.math.BigInteger;
 
 /**

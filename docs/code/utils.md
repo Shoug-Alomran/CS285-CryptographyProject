@@ -1,5 +1,3 @@
-```java
-title="Utils.java"
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
