@@ -62,13 +62,6 @@ Although the numbers are small, the logic mirrors real-world key exchange system
 
 To provide broader context, this diagram compares the **traditional Diffie–Hellman (DH)** and **Elliptic Curve Diffie–Hellman (ECDH)** methods.
 
-| **Aspect** | **DH** | **ECDH** |
-|-------------|--------|----------|
-| Mathematical Basis | Modular exponentiation | Elliptic curve point multiplication |
-| Key Size | Larger (requires big primes) | Smaller (same security with shorter keys) |
-| Computational Efficiency | Slower | Faster |
-| Security Strength | Strong but depends on prime size | Stronger per bit; harder to break |
-| Use Cases | Older implementations (VPNs, SSH) | Modern secure systems (TLS 1.3, Signal) |
 
 !!! note "Summary"
     Both algorithms achieve the same goal — establishing a shared secret key over an insecure channel.  
