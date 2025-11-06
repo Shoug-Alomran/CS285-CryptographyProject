@@ -27,6 +27,7 @@ theme:
 nav:
   - Home: index.md
   - About: about.md
+  - CS285 Project Report: cs285_full.html
   - Introduction: introduction.md
   - Implementation: implementation.md
   - Results: results.md
