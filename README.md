@@ -9,7 +9,7 @@ The project demonstrates how two parties can securely generate a shared secret k
 **Developed by:**  
 - Shoug Fawaz Alomran  
 - Fai Mohammad Khanjar  
-- Aljohara Waleed Albawardi  
+- Aljoharah Waleed Albawardi  
 - Yara Mutlaq Alzamel  
 
 **Submission Date:** 9/11/2025  
