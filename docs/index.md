@@ -10,7 +10,7 @@
 **Developed by:**  
 - Shoug Fawaz Alomran  
 - Fai Mohammad Khanjar  
-- Aljohara Waleed Albawardi  
+- Aljoharah Waleed Albawardi  
 - Yara Mutlaq Alzamel  
 
 ---
