@@ -42,9 +42,8 @@ nav:
       - Helpers: code/helpers.md
       - Validator: code/validator.md
       - Utils: code/utils.md
-  - CS285 Report:
-      - View Report: cs285/report.md
-      - Full HTML Report: cs285/dh-report.html
+  - Report:
+      - View Report: report/report.md
 
 markdown_extensions:
   - admonition
