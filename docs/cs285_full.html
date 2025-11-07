@@ -1,518 +1,1137 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS285 - Diffie-Hellman Key Exchange Implementation</title>
+    <title>CS285 Diffie-Hellman Project Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #4a6baf;
-            --secondary: #8a4db9;
-            --accent: #6c5ce7;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --info: #17a2b8;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            background-attachment: fixed;
-            padding: 20px;
+
+```
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+    
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .slide {
+        background: white;
+        border-radius: 24px;
+        padding: 50px;
+        margin-bottom: 30px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: slideIn 0.6s ease-out;
+    }
+    
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Title Slide */
+    .title-slide {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-align: center;
+        min-height: 600px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .title-slide h1 {
+        font-size: 3.5em;
+        font-weight: 800;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+    
+    .title-slide .subtitle {
+        font-size: 1.5em;
+        font-weight: 300;
+        opacity: 0.95;
+        margin-bottom: 40px;
+    }
+    
+    .badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 12px 30px;
+        border-radius: 50px;
+        margin: 10px;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+    }
+    
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-top: 40px;
+    }
+    
+    .team-member {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 15px;
+        border-radius: 12px;
+        font-size: 0.9em;
+    }
+    
+    /* Section Headers */
+    h2 {
+        font-size: 2.2em;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 30px;
+    }
+    
+    h3 {
+        font-size: 1.6em;
+        font-weight: 600;
+        color: #667eea;
+        margin: 30px 0 20px 0;
+    }
+    
+    h4 {
+        font-size: 1.3em;
+        font-weight: 600;
+        color: #764ba2;
+        margin: 25px 0 15px 0;
+    }
+    
+    p {
+        font-size: 1.05em;
+        line-height: 1.8;
+        color: #4a5568;
+        margin-bottom: 20px;
+        text-align: justify;
+    }
+    
+    /* Card Styles */
+    .card {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        border-left: 5px solid #3b82f6;
+        border-radius: 16px;
+        padding: 30px;
+        margin: 25px 0;
+    }
+    
+    .card-green {
+        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        border-left: 5px solid #10b981;
+    }
+    
+    .card-yellow {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-left: 5px solid #f59e0b;
+    }
+    
+    .card-purple {
+        background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%);
+        border-left: 5px solid #a855f7;
+    }
+    
+    .card h4 {
+        margin-top: 0;
+    }
+    
+    /* Lists */
+    ul, ol {
+        margin: 20px 0 20px 30px;
+        line-height: 1.9;
+    }
+    
+    li {
+        margin: 12px 0;
+        color: #4a5568;
+        font-size: 1.05em;
+    }
+    
+    /* Code Blocks */
+    .code-container {
+        background: #1e293b;
+        border-radius: 16px;
+        overflow: hidden;
+        margin: 30px 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .code-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px 25px;
+        font-weight: 600;
+        font-size: 1.1em;
+    }
+    
+    .code-block {
+        padding: 25px;
+        overflow-x: auto;
+        color: #e2e8f0;
+        font-family: 'Courier New', monospace;
+        font-size: 0.95em;
+        line-height: 1.6;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+    
+    .code-block::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .code-block::-webkit-scrollbar-track {
+        background: #0f172a;
+    }
+    
+    .code-block::-webkit-scrollbar-thumb {
+        background: #475569;
+        border-radius: 5px;
+    }
+    
+    /* Images */
+    .screenshot {
+        text-align: center;
+        margin: 30px 0;
+    }
+    
+    .screenshot img {
+        max-width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .screenshot-caption {
+        font-style: italic;
+        color: #64748b;
+        margin-top: 10px;
+        font-size: 0.95em;
+    }
+    
+    /* Team Cards */
+    .team-card {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-left: 5px solid #f59e0b;
+        border-radius: 16px;
+        padding: 25px;
+        margin: 20px 0;
+    }
+    
+    .team-card h4 {
+        color: #92400e;
+        margin-top: 0;
+        font-size: 1.4em;
+    }
+    
+    /* References */
+    .reference {
+        background: #f8fafc;
+        border-left: 4px solid #06b6d4;
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 8px;
+        font-size: 0.95em;
+        line-height: 1.6;
+    }
+    
+    /* Advantages/Limitations boxes */
+    .feature-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin: 30px 0;
+    }
+    
+    .advantage-box {
+        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        border-radius: 16px;
+        padding: 25px;
+    }
+    
+    .advantage-box h4 {
+        color: #065f46;
+        margin-top: 0;
+    }
+    
+    .limitation-box {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-radius: 16px;
+        padding: 25px;
+    }
+    
+    .limitation-box h4 {
+        color: #92400e;
+        margin-top: 0;
+    }
+    
+    /* Math */
+    sup {
+        font-weight: 600;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .slide {
+            padding: 30px 25px;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .report {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            margin-bottom: 30px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        h1 {
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-size: 2.2rem;
-        }
-        
-        .course-info {
-            color: var(--dark);
-            margin-bottom: 20px;
-        }
-        
-        .contributors {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .contributor {
-            background: #f1f3f9;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .toc {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 30px 0;
-        }
-        
-        .toc h2 {
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-        
-        .toc ol {
-            margin-left: 20px;
-        }
-        
-        .toc li {
-            margin-bottom: 8px;
-        }
-        
-        .toc a {
-            color: var(--secondary);
-            text-decoration: none;
-        }
-        
-        .toc a:hover {
-            text-decoration: underline;
-        }
-        
-        .section {
-            margin-bottom: 40px;
-        }
-        
-        .section-header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .section-header i {
-            margin-right: 10px;
-            font-size: 1.2rem;
+        .title-slide h1 {
+            font-size: 2.2em;
         }
         
         h2 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #eee;
+            font-size: 1.8em;
         }
         
-        h3 {
-            color: var(--secondary);
-            margin: 20px 0 10px;
+        .feature-box {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    /* Print styles */
+    @media print {
+        body {
+            background: white;
         }
         
-        p {
-            margin-bottom: 15px;
+        .slide {
+            page-break-inside: avoid;
+            box-shadow: none;
+            border: 1px solid #e2e8f0;
         }
-        
-        .image-container {
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        .screenshot {
-            max-width: 100%;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .caption {
-            background: #f1f3f9;
-            padding: 8px 15px;
-            border-radius: 4px;
-            font-style: italic;
-            margin-top: 10px;
-            display: inline-block;
-        }
-        
-        .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-        
-        .code-comment {
-            color: #75715e;
-        }
-        
-        .code-keyword {
-            color: #f92672;
-        }
-        
-        .code-string {
-            color: #e6db74;
-        }
-        
-        .code-function {
-            color: #a6e22e;
-        }
-        
-        .code-class {
-            color: #66d9ef;
-        }
-        
-        .team-contribution {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .member {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary);
-        }
-        
-        .member h4 {
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .references {
-            list-style-type: none;
-        }
-        
-        .references li {
-            margin-bottom: 15px;
-            padding-left: 20px;
-            text-indent: -20px;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .report {
-                padding: 20px;
-            }
-            
-            .team-contribution {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    }
+</style>
+```
+
 </head>
 <body>
     <div class="container">
-        <div class="report">
-            <header>
-                <h1>Implementation and Analysis of the Diffie–Hellman Key Exchange Algorithm in Java</h1>
-                <div class="course-info">
-                    <p><strong>CS285: Discrete Mathematics for Computing</strong></p>
-                    <p><strong>Course Instructor:</strong> Dr. Jalila Zouhair</p>
-                    <p><strong>Section #:</strong> 963</p>
-                </div>
-                <div class="contributors">
-                    <div class="contributor">SHOUG FAWAZ ABDULLAH ALOMRAN 223410392</div>
-                    <div class="contributor">ALJOHARA WALEED A ALBAWARDI 223410346</div>
-                    <div class="contributor">YARA MUTLAQ MOHAMMED ALZAMEL 223410834</div>
-                    <div class="contributor">FAI MOHAMMAD BIN KHANJAR 223410071</div>
-                </div>
-            </header>
-            
-            <div class="toc">
-                <h2>Table of Contents</h2>
-                <ol>
-                    <li><a href="#introduction">Introduction</a>
-                        <ol>
-                            <li><a href="#purpose">Purpose of the Diffie–Hellman Key Exchange and Its Applications</a></li>
-                            <li><a href="#algorithm">Algorithm Explanation</a></li>
-                            <li><a href="#numerical">Numerical Example</a></li>
-                            <li><a href="#advantages">Advantages & Limitations</a></li>
-                            <li><a href="#comparison">Comparison</a></li>
-                        </ol>
-                    </li>
-                    <li><a href="#code">Code Description</a>
-                        <ol>
-                            <li><a href="#program">How the Program Works</a></li>
-                            <li><a href="#implementation">Implementation of Each Part</a></li>
-                            <li><a href="#challenges">Challenges Faced and How We Overcame Them</a></li>
-                        </ol>
-                    </li>
-                    <li><a href="#results">Results and Test Cases</a></li>
-                    <li><a href="#team">Team Contribution</a></li>
-                    <li><a href="#conclusion">Conclusion</a></li>
-                    <li><a href="#references">References and Resources</a></li>
-                    <li><a href="#appendix">Appendix – Full Source Code</a></li>
-                </ol>
+
+```
+    <!-- Title Slide -->
+    <div class="slide title-slide">
+        <h1>Diffie-Hellman Key Exchange</h1>
+        <p class="subtitle">Implementation and Analysis in Java</p>
+        
+        <div>
+            <span class="badge">CS285: Discrete Mathematics</span>
+            <span class="badge">Section 963</span>
+        </div>
+        
+        <p style="margin-top: 30px; font-size: 1.1em;">Instructor: Dr. Jalila Zouhair</p>
+        <p style="font-size: 0.95em; opacity: 0.9;">College of Computer and Information Sciences (CCIS)</p>
+        
+        <div class="team-grid">
+            <div class="team-member">SHOUG FAWAZ ABDULLAH ALOMRAN<br>223410392</div>
+            <div class="team-member">ALJOHARAH WALEED A ALBAWARDI<br>223410346</div>
+            <div class="team-member">YARA MUTLAQ MOHAMMED ALZAMEL<br>223410834</div>
+            <div class="team-member">FAI MOHAMMAD BIN KHANJAR<br>223410071</div>
+        </div>
+    </div>
+
+    <!-- Introduction -->
+    <div class="slide">
+        <h2>1. Introduction</h2>
+        <p>In today's digital world, secure communication is the need of the hour to protect sensitive information being exchanged over public networks. The Diffie-Hellman key exchange algorithm allows two parties to agree on a shared secret key without actually exchanging it, and forms a basis for many of today's encryption schemes.</p>
+        
+        <p>The following Java code for the Diffie–Hellman implementation is provided for CS285, Discrete Mathematics for Computing. The developed system incorporates some of the very fundamental mathematical concepts regarding modular arithmetic and exponentiation. The system simulates secure key generation and exchange between two entities using the Diffie–Hellman key exchange method. A simple encryption and decryption mechanism has also been provided to illustrate how the derived shared key can be used to secure messages</p>
+        
+        <p>We divide the program into the following classes: Parameters handles all public values, KeyExchange generates and computes keys, Encryptor encrypts messages, and Validator, Helpers, and Utils ensure correct input handling and output formatting. The Main class integrates all components of the system and allows users to test both a predefined numerical example and a live interactive mode.</p>
+        
+        <p>The project ties together theoretical mathematics and programming in practice, showing how secure key exchange and encryption work in real-world systems.</p>
+    </div>
+
+    <!-- Purpose -->
+    <div class="slide">
+        <h3>1.1 Purpose of the Diffie–Hellman Key Exchange and Its Applications</h3>
+        <p>The Diffie-Hellman key exchange is a cryptography technique whose main purpose is to allow two parties to exchange a key that can be used for encrypting messages.This shared key can be used in public channels that ensures no one unauthorized can read it. The key concept was developed by Ralph Merkle but was published by Whitfield Diffie and Martin Hellman in 1976, which is why it's named after them.</p>
+        
+        <div class="card">
+            <h4>Real-World Applications:</h4>
+            <ul>
+                <li><strong>Transport Layer Security (TLS):</strong> Uses DH variants during the handshake process to generate session keys for encrypting web traffic, protecting passwords and credit card information</li>
+                <li><strong>Secure Shell (SSH):</strong> Establishes secret keys between client and server early in the connection process, ensuring all commands and file transfers remain encrypted</li>
+                <li><strong>Royal Convoy Security:</strong> Vehicles and control centers communicate location and security instructions using ECDH to maintain message security</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Algorithm Explanation -->
+    <div class="slide">
+        <h3>1.2 Algorithm Explanation</h3>
+        <p>The Diffie–Hellman key exchange algorithm allows two people known as Alice and Bob to create a secret key and send it over insecure channels such as the Internet. To generate matching secret keys, the Diffie–Hellman method uses modular arithmetic and exponentiation, in which both users perform calculations using a shared set of public numbers.</p>
+        
+        <div class="card-green">
+            <h4>How It Works:</h4>
+            <ol>
+                <li>Alice and Bob agree on public parameters: prime number <strong>q</strong> and primitive root <strong>α</strong></li>
+                <li>Alice chooses private key <strong>Xa</strong>, Bob chooses <strong>Xb</strong> (both less than q)</li>
+                <li>They generate public keys: Ya = α<sup>Xa</sup> mod q and Yb = α<sup>Xb</sup> mod q</li>
+                <li>They exchange public keys over the network</li>
+                <li>Each computes the shared secret:
+                    <ul>
+                        <li>Alice: k = Yb<sup>Xa</sup> mod q</li>
+                        <li>Bob: k = Ya<sup>Xb</sup> mod q</li>
+                    </ul>
+                </li>
+                <li>Both arrive at the same secret key!</li>
+            </ol>
+        </div>
+        
+        <p>Even though the values q, α, Ya, and Yb are publicly available, it is nearly impossible to deduce the private keys Xa or Xb from them, which is what gives the Diffie–Hellman algorithm its security. This complexity is due to the fact that it is very challenging to solve the discrete logarithm problem.</p>
+    </div>
+
+    <!-- Numerical Example -->
+    <div class="slide">
+        <h3>1.3 Numerical Example</h3>
+        <p>To give an example, both 2 cars and the control center need a safe way to communicate during the royal convoy.</p>
+        
+        <div class="card-purple">
+            <h4>Step-by-Step Calculation:</h4>
+            <ol>
+                <li>Everyone agrees on two public numbers: <strong>q = 23</strong> and <strong>α = 5</strong></li>
+                <li>Car 1 chooses private number <strong>Xa = 6</strong> and calculates its public key<br>
+                    Ya = α<sup>Xa</sup> mod q = 5<sup>6</sup> mod 23 = <strong>8</strong></li>
+                <li>Car 2 chooses private number <strong>Xb = 15</strong> and calculates its public key<br>
+                    Yb = α<sup>Xb</sup> mod q = 5<sup>15</sup> mod 23 = <strong>19</strong></li>
+                <li>They exchange their public keys Ya and Yb</li>
+                <li>Each car calculates the shared secret key:
+                    <ul>
+                        <li>Car 1 computes: 19<sup>6</sup> mod 23 = <strong>2</strong></li>
+                        <li>Car 2 computes: 8<sup>15</sup> mod 23 = <strong>2</strong></li>
+                    </ul>
+                </li>
+                <li>Both cars get the same secret key: <strong>2</strong></li>
+            </ol>
+        </div>
+        
+        <div class="screenshot">
+            <img src="/mnt/user-data/uploads/image.jpeg" alt="Numerical Example Screenshot">
+            <p class="screenshot-caption">Numerical Example with Fixed Values (q=23, α=5)</p>
+        </div>
+    </div>
+
+    <!-- Advantages & Limitations -->
+    <div class="slide">
+        <h3>1.4 Advantages & Limitations</h3>
+        
+        <div class="feature-box">
+            <div class="advantage-box">
+                <h4>Advantages</h4>
+                <ul>
+                    <li><strong>No Prior Key Exchange:</strong> Secure key generation without needing advanced key exchange</li>
+                    <li><strong>Forward Secrecy:</strong> Previous messages remain secure even if long-term keys are compromised</li>
+                    <li><strong>Mathematical Foundation:</strong> Security based on the computationally hard discrete logarithm problem</li>
+                    <li><strong>Widely Adopted:</strong> Forms the foundation for many secure protocols</li>
+                </ul>
             </div>
             
-            <div class="section" id="introduction">
-                <div class="section-header">
-                    <h2>1. Introduction</h2>
-                </div>
-                
-                <p>In today's digital world, secure communication is the need of the hour to protect sensitive information being exchanged over public networks. The Diffie-Hellman key exchange algorithm allows two parties to agree on a shared secret key without actually exchanging it, and forms a basis for many of today's encryption schemes.</p>
-                
-                <p>The following Java code for the Diffie–Hellman implementation is provided for CS285, Discrete Mathematics for Computing. The developed system incorporates some of the very fundamental mathematical concepts regarding modular arithmetic and exponentiation. The system simulates secure key generation and exchange between two entities using the Diffie–Hellman key exchange method. A simple encryption and decryption mechanism has also been provided to illustrate how the derived shared key can be used to secure messages.</p>
-                
-                <p>We divide the program into the following classes: Parameters handles all public values, KeyExchange generates and computes keys, Encryptor encrypts messages, and Validator, Helpers, and Utils ensure correct input handling and output formatting. The Main class integrates all components of the system and allows users to test both a predefined numerical example and a live interactive mode.</p>
-                
-                <p>The project ties together theoretical mathematics and programming in practice, showing how secure key exchange and encryption work in real-world systems.</p>
-                
-                <h3 id="purpose">1.1 Purpose of the Diffie–Hellman Key Exchange and Its Applications</h3>
-                
-                <p>The Diffie-Hellman key exchange is a cryptography technique whose main purpose is to allow two parties to exchange a key that can be used for encrypting messages. This shared key can be used in public channels that ensures no one unauthorized can read it. The key concept was developed by Ralph Merkle but was published by Whitfield Diffie and Martin Hellman in 1976, which is why it's named after them.</p>
-                
-                <p>The Diffie-Hellman key exchange is used in many ways in real life for example its use in Transport Layer Security (TLS). TLS uses a set of protocols to establish a secure tunnel for web traffic. During the initial "handshake" process, the browser authenticates the server's TLS certificate to verify its identity. Once both parties are authenticated, they use a Diffie-Hellman (DH) variant to exchange public values and generate a unique session key. This key encrypts all data transmitted throughout the browsing session, ensuring that sensitive information such as passwords and credit card numbers remains protected (Ambatipudi, 2024).</p>
-                
-                <p>Another use is Secure Shell commonly known as SSH. This network protocol is used for securely logging into and controlling remote computers, as well as transferring files. SSH uses the DH algorithm early in the connection process to establish a secret key between the client and the server, ensuring that all subsequent commands, outputs, and file transfers are encrypted and protected from interception (Ambatipudi, 2024).</p>
-                
-                <h3 id="algorithm">1.2 Algorithm Explanation</h3>
-                
-                <p>The Diffie–Hellman key exchange algorithm allows two people known as Alice and Bob to create a secret key and send it over insecure channels such as the Internet. To generate matching secret keys, the Diffie–Hellman method uses modular arithmetic and exponentiation, in which both users perform calculations using a shared set of public numbers. Without knowing the private numbers, this process is almost impossible to reverse, but it is simple to compute in one direction.</p>
-                
-                <p>First, a primitive root α and a large prime number q are publicly agreed upon by both Alice and Bob. Everyone can know these two values; they are not hidden. After that, Alice chose an integer Xa, and Bob chose an integer Xb; both integers should be less than q and kept private.</p>
-                
-                <p>The third step is by generating their public keys as Ya = α[Xa] mod q and Yb = α[Xb] mod q. Both Alice and Bob can now exchange their public keys using the network. Now, using modular arithmetic once more, each user raises the received public key to the power of their own private key in order to obtain the shared secret. Alice calculates k = Yb[Xa] mod q, while Bob calculates k = Ya[Xb] mod q; this will result in the same secret key.</p>
-                
-                <p>Even though the values q, α, Ya, and Yb are publicly available, it is nearly impossible to deduce the private keys Xa or Xb from them, which is what gives the Diffie–Hellman algorithm its security. This complexity is due to the fact that it is very challenging to solve the discrete logarithm problem, which is the task of determining the exponent used in modular arithmetic, for large numbers (Diffie & Hellman, 1976; Roy, Datta & Mitchell, 2007).</p>
-                
-                <p>During a royal convoy, vehicles and the control center must communicate on location and security instructions. Each vehicle and the control center first reach an agreement on some public integers. Then they create their own private keys and calculate the public keys from them. After sending the public keys to each other, both sides use the Diffie–Hellman method, specifically the Elliptic Curve version (ECDH), to arrive at the same secret key. This key helps maintain the security of the messages. Even if someone is able to intercept the data, they won't be able to decode the messages or determine exactly which route taken by the convoy. Section 1.3 provides an easy explanation of how this is implemented.</p>
-                
-                <h3 id="numerical">1.3 Numerical Example</h3>
-                
-                <p>To give an example, both 2 cars and the control center need a safe way to communicate during the royal convoy.</p>
-                
-                <ol>
-                    <li>Everyone agrees on two public numbers: q = 23 and a = 5.</li>
-                    <li>The first car chooses a private number Xa = 6 and calculates its public key Ya = a^Xa mod q = 5^6 mod 23 = 8.</li>
-                    <li>Car 2 chooses a private number Xb = 15 and calculates its public key Yb = a^Xb mod q = 5^15 mod 23 = 19.</li>
-                    <li>They exchange their public keys Ya and Yb.</li>
-                    <li>Each car calculates the shared secret key:
-                        <ul>
-                            <li>Car 1 computes Yb^Xa mod q = 19^6 mod 23 = 2.</li>
-                            <li>Car 2 computes Ya^Xb mod q = 8^15 mod 23 = 2.</li>
-                        </ul>
-                    </li>
-                    <li>Both cars get the same secret key 2, which keeps their messages safe so no one can read them.</li>
-                </ol>
-                
-                <div class="image-container">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAAAX5r5+AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA" class="screenshot" alt="Numerical Example (Fixed Values)">
-                    <div class="caption">Numerical Example (Section 1.3 – Fixed)</div>
-                </div>
-                
-                <div class="image-container">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAAAX5r5+AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA" class="screenshot" alt="Numerical Example (Auto-generated Values)">
-                    <div class="caption">Numerical Example (Auto-generated values)</div>
-                </div>
-                
-                <h3 id="advantages">1.4 Advantages & Limitations</h3>
-                
-                <p>The Diffie-Hellman (DH) key exchange is a quite ancient public-key cryptography scheme, in which two individuals desiring to derive a mutual secret key over an insecure line of communication agree. Its security relies upon the solvability of the discrete logarithmic problem (DLP). Mathematical problem whose solution becomes effectively impossible to achieve employing very large prime numbers (RubinStein-Salzedo 101).</p>
-                
-                <p>One of the reasons that Diffie-Hellman is most useful is that it offers secure key generation without needing an advanced key exchange. Both sides create a public and private value, and even if the attacker gets the public information, they cannot calculate the private key because of the hardness of DLP (RubinStein-Salzedo 104). This makes Diffie-Hellman a foundation for secure communication, especially where advance trust or physical key exchange is not feasible.</p>
-                
-                <p>Another key advantage is that DH can be designed to provide forward secrecy in case of correct usage. Forward secrecy ensures that even if a long-term private key is broken, previous messages encrypted with it are still secure. Adrian et al. refer to this element as the one that works towards limiting the effects of security violations and ensuring long-term confidentiality of computer systems (Adrian et al. 41). Diffie-Hellman is also great in theory and easy to implement, and this has set the standard for other secure protocols. Odlyzko records that application of modular arithmetic and exponentiation in the algorithm are well-chosen parameters to provide theoretical security (Odlyzko 3).</p>
-                
-                <p>Although being robust, the Diffie-Hellman algorithm has several frailties that must be addressed to deploy it safely. Its vulnerability to man-in-the-middle (MitM) attacks is the first among them. As the original protocol is not authenticating the user, there is an opportunity for the attacker to intercept messages, impersonating both parties, and generate two different shared keys, which enables them to read or alter all the communications (Rubinstein-Salzedo 109). Because authentication has not been applied, the system assumes both parties' public key is legitimate, which can be tampered with.</p>
-                
-                <p>Parameter reuse and incorrect configuration are another vulnerability. Adrian et al. have learned that the majority of real-world systems reuse one set of primes on several servers, making it simpler to attack them if one set gets into the wrong hands (Adrian et al. 42). Reusing weak or common primes diminishes general security because an adversary can precompute solutions for those specific values.</p>
-                
-                <p>Finally, DH is slower computationally than symmetric-key algorithms. Odlyzko explains that big primes require significant processing power, especially on small machines or low-end machines (Odlyzko 7). There must be a proper balance of the performance/security trade-off in order to realize practicability in implementations.</p>
-                
-                <h3 id="comparison">1.5 Comparison</h3>
-                
-                <p>The original Diffie-Hellman (DH) scheme rests on the pillars of arithmetic and the discrete logarithm problem, which together hand it a mathematically sound foundation for swapping keys securely. Still as we pointed out earlier its robustness leans heavily on the development of primes and the careful tuning of its parameters. Toss in primes or recycle the parameters over and over and the whole construction becomes open to sub-exponential and pre-computation attacks - adversaries can tease out the private keys by playing with the publicly shared values. Beyond that Diffie-Hellman can fall prey to man-in-the-middle attacks when authentication is omitted. Such shortcomings curb its efficiency and make it hard to scale for systems that demand both speed and robust security.</p>
-                
-                <p>Elliptic Curve Diffie-Hellman (ECDH) avoids many of the shortcomings by relying on elliptic-curve mathematics instead of modular arithmetic (Boneh & Shparlinski, 2001; Haakegaard & Lang, 2015). Since the elliptic-curve discrete logarithm problem (ECDLP) is far tougher to solve, ECDH can provide security with smaller keys - for example, a 256-bit ECDH key offers roughly the same strength as a 3072-bit DH key.</p>
-                
-                <p>Unlike Diffe-Hellman, which can be weakened when many users share the parameters, elliptic-curve Diffie-Hellman (ECDH) lets each party pick its own curve settings, thereby slashing the threat of large-scale pre-computation attacks. It also brings secrecy and unpredictability to the bits - knowing a slice of the key offers no edge to an attacker (Boneh & Shparlinski, 2001). Though ECDH adds some complexity, it has been widely embraced in cryptographic protocols such as TLS 1.3 and SSH, striking a sweet spot between performance and strong security.</p>
-                
-                <p>In summary, both DH and elliptic-curve share a common foundation yet differ significantly in design and efficiency. ECDH rests on the discrete-logarithm problem, it's practical and is secure. It preserves DH's strengths while delivering faster performance, smaller keys, and stronger resistance to known attacks.</p>
-                
-                <div class="image-container">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAAAX5r5+AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA" class="screenshot" alt="Venn Diagram comparing DH and ECDH">
-                    <div class="caption">Venn Diagram comparing DH and ECDH</div>
-                </div>
+            <div class="limitation-box">
+                <h4>Limitations</h4>
+                <ul>
+                    <li><strong>Man-in-the-Middle Attacks:</strong> Original protocol lacks authentication, allowing attackers to intercept and impersonate parties</li>
+                    <li><strong>Parameter Reuse:</strong> Reusing weak or common primes across systems reduces security</li>
+                    <li><strong>Computational Cost:</strong> Big primes require significant processing power, especially on small machines</li>
+                </ul>
             </div>
-            
-            <div class="section" id="code">
-                <div class="section-header">
-                    <h2>2. Code Description</h2>
-                </div>
-                
-                <h3 id="program">2.1 How the Program Works</h3>
-                
-                <p>For our program, we implemented a main program which tests all of our implementations, supported by six classes. Each class had a distinct rule, the parameters class stores and displayed our public parameters which included the prime number and primitive root. The key exchange class generated private and public keys and computed a shared secret key. We also had an encryptor class which handled encrypting and decrypting messages that used the shared key. Additionally, a validator class which performs for prime checks and making sure our message length is the right length. A utilities class was implemented with the main goal of making our program run better, it had helper methods such as random generation and formatted output.</p>
-                
-                <p>Finally, we have the helpers class which manages all our user inputs and ensures correctness such as message validation loops.</p>
-                
-                <h3 id="implementation">2.2 Implementation of Each Part</h3>
-                
-                <h4>Key Generation</h4>
-                
-                <div class="code-block">
-                    <pre><code><span class="code-keyword">private void</span> <span class="code-function">generateKeys</span>() {
-  <span class="code-keyword">this</span>.privateKey = <span class="code-keyword">new</span> BigInteger(getQ().bitLength(), random).mod(getQ().subtract(BigInteger.TWO))
-    .add(BigInteger.ONE);  <span class="code-comment">// 1 <= x <= q-2</span>
-  <span class="code-keyword">this</span>.publicKey = getAlpha().modPow(privateKey, getQ());
-  <span class="code-comment">// Y = a^x mod q</span>
-}</code></pre>
-                </div>
-                
-                <p>To generate a private key, we would choose a random number from 1 to the prime number (q) minus 2. Then we find the public key (y) using the formula Y = a^x mod q.</p>
-                
-                <h4>Encryption</h4>
-                
-                <div class="code-block">
-                    <pre><code><span class="code-keyword">String</span> <span class="code-function">encrypt</span>(<span class="code-keyword">String</span> msg, BigInteger sharedKey) <span class="code-keyword">throws</span> Exception {
-  <span class="code-keyword">byte</span>[] msgByte = msg.getBytes(StandardCharsets.UTF_8); <span class="code-comment">// converts the text into bytes</span>
-  <span class="code-keyword">byte</span>[] keyByte = Key(sharedKey); <span class="code-comment">// uses the key function to store the data</span>
-  <span class="code-keyword">byte</span>[] cipherMsgByte = xor(msgByte, keyByte); <span class="code-comment">// ciphers the text</span>
-  <span class="code-keyword">return</span> Base64.getEncoder().encoderToString(cipherMsgByte);
-}</code></pre>
-                </div>
-                
-                <p>To encrypt the message, we convert the message into Byte using the getBytes function, storing each byte in the array. Next, we use the Key method to convert the shared key to a byte then hashing the key, converting it into SHA-256, making it more difficult to decrypt. Lastly we cipher the message using the xor function which decrypts the bytes using the public key formula. This then can be printed in the main giving us multiple random letters that aren't readable.</p>
-                
-                <h4>Decryption</h4>
-                
-                <div class="code-block">
-                    <pre><code><span class="code-keyword">String</span> <span class="code-function">decrypt</span>(<span class="code-keyword">String</span> base64cipherMsg, BigInteger sharedKey) <span class="code-keyword">throws</span> Exception {
-  <span class="code-keyword">byte</span>[] keyByte = Key(sharedKey); <span class="code-comment">// stores data</span>
-  <span class="code-keyword">byte</span>[] cipherMsgByte = Base64.getDecoder().decode(base64cipherMsg); <span class="code-comment">// decodes the data using a method</span>
-  <span class="code-keyword">byte</span>[] msgByte = xor(cipherMsgByte, keyByte); <span class="code-comment">// uses the same equation to return it to a readable text</span>
-  <span class="code-keyword">return</span> <span class="code-keyword">new</span> String(msgByte, StandardCharsets.UTF_8);
-}</code></pre>
-                </div>
-                
-                <p>For decryption, it's similar to encryption with a few differences. It starts with the Key method, hashing and organizing the bytes first then decoding the message using the getDecoder() function. Lastly it uses the xor again to return it into readable texts.</p>
-                
-                <h3 id="challenges">2.3 Challenges Faced and How We Overcame Them</h3>
-                
-                <p>In the process of testing and development, a lot of problems were encountered, particularly in input checking, class integration, and modular arithmetic operations. The most frequent problem was with initial testing of the validator and Main classes, where invalid user input, such as non-prime input numbers or message lengths less than 20 characters, at one point caused the program to crash. This was done by adding relentless loops of verification that will repeatedly ask the user instead of terminating execution, ensuring the program will be executed successfully regardless of wrong inputs.</p>
-                
-                <p>The second issue occurred while combining different team members' classes. Because every class (like Parameters, KeyExchange, and Encryptor) was programmed separately, variable names and method types needed to be standardized in a way that the Main class would compile and execute as needed. To avoid this, the team standardized method names such as generatePublicKey() and computeSharedKey() and inserted temporary placeholders in Main until they were finished writing all classes so it would be simple to insert later.</p>
-                
-                <p>Besides, preliminary tests were producing incorrect values in mathematical calculations for the public and common keys. This was due to the absence of modular exponentiation logic. Using Java's native modPow() method into the keyExchange class fixed this issue, delivering correct keys that matched both vehicles exactly.</p>
-                
-                <p>Finally, it was even attempted that encryption was exposing contradictions between the encrypted and decrypted messages due to discrepancies in how byte arrays were being handled. Altering the Encryptor class to use StandardCharsets.UTF_8 and Base64 encoding ensured all messages decrypted flawlessly into its original text.</p>
-                
-                <p>By overall systematic testing of all components, addition of good validation, and standardized naming conventions coordination, the team managed to get beyond integration as well as logic flaws and produce a functional implementation of the Diffie-Hellman key exchange system.</p>
-            </div>
-            
-            <div class="section" id="results">
-                <div class="section-header">
-                    <h2>3. Results and Test Cases</h2>
-                </div>
-                
-                <h3>Successful run with matching shared keys and valid messages</h3>
-                
-                <h4>Autogenerated keys</h4>
-                
-                <div class="image-container">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAAAX5r5+AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA" class="screenshot" alt="Live Mode - Autogenerated">
-                    <div class="caption">Live Mode - Autogenerated</div>
-                </div>
-                
-                <h4>Manual Keys</h4>
-                
-                <div class="image-container">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAAAX5r5+AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA" class="screenshot" alt="Live Mode - Manual">
-                    <div class="caption">Live Mode - Manual</div>
-                </div>
-                
-                <h4>Invalid prime q & alpha</h4>
-                
-                <div class="image-container">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAAAX5r5+AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA" class="screenshot" alt="Live Mode - Prime Error">
-                    <div class="caption">Live Mode - Prime Error</div>
-                </div>
-                
-                <div class="image-container">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAAAX5r5+AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA" class="screenshot" alt="Live Mode - Alpha Error">
-                    <div class="caption">Live Mode - Alpha Error</div>
-                </div>
-                
-                <h4>Short message (< 20 chars) validation error</h4>
-                
-                <div class="image-container">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAAAX5r5+AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA" class="screenshot" alt="Live Mode - Message Error">
-                    <div class="caption">Live Mode - Message Error</div>
-                </div>
-            </div>
-            
-            <div class="section" id="team">
-                <div class="section-header">
-                    <h2>4. Team Contribution</h2>
-                </div>
-                
-                <p>It was a collaborative project that required everyone to coordinate, communicate, and work together. All members of the group collaborated on both the Java implementation and the report, allowing for simultaneous technical and theoretical progress.</p>
-                
-                <div class="team-contribution">
-                    <div class="member">
-                        <h4>Yara Alzamel</h4>
-                        <p>Yara Alzamel established the foundation of the program by declaring the public parameters and helper methods upon which the rest of the system depended. She was responsible for designing the classes that are responsible for the generation of the public values, i.e., the prime number and primitive root, and adding helper functions for normalizing random number generation and formatted print. She was responsible for the foundation on which the rest of the program was constructed and also to describe the program's initialization and overall flow in the report.</p>
-                    </div>
-                    
-                    <div class="member">
-                        <h4>Fai Bin Khanjar</h4>
-                        <p>Fai Bin Khanjar took care of the underlying mathematics of implementing the Diffie–Hellman algorithm. She implemented key generation with private keys on both sides, calculated their corresponding public keys, and made sure that the resulting shared secret key generated was identical on both sides. She created a numerical example based on the report to explain step-by-step algorithm calculation. Her attentiveness during modular arithmetic verification and accuracy result checks helped to ensure the program's correctness.</p>
-                    </div>
-                    
-                    <div class="member">
-                        <h4>Aljohara Albawardi</h4>
-                        <p>Aljohara Albawardi developed the encryption and decryption components of the project. She implemented a lightweight encryption mechanism that used the shared secret key derived from Fai's module. Her focus was on converting theoretical key exchange into practical message security, ensuring that messages longer than twenty characters could be securely encrypted and successfully decrypted. She also conducted test runs, captured the output by taking screenshots, and mentioned security advantages and restrictions of the algorithm in the report.</p>
-                    </div>
-                    
-                    <div class="member">
-                        <h4>Shoug Alomran</h4>
-                        <p>Shoug Alomran executed validation, integration, and assembly of the program last. She used input validation to ensure that users enter a valid prime number and that the size of the message complies with project requirements. She applied all modules—key generation, key exchange, encryption, and output formatting—inside the driver program, tested the whole program running, and managed exceptions so that the program ran flawlessly end to end. Apart from her technical contribution, she also integrated the group's written elements into the final report, maintaining the structure, tone, and format intact.</p>
-                    </div>
-                </div>
-                
-                <p>The team achieved coordination primarily by using GitHub as a version manager and code shar
+        </div>
+    </div>
+
+    <!-- Comparison -->
+    <div class="slide">
+        <h3>1.5 Comparison</h3>
+        
+        <p>The original Diffie-Hellman (DH) scheme rests on the pillars of arithmetic and the discrete logarithm problem, which together hand it a mathematically sound foundation for swapping keys securely. Still as we pointed out earlier its robustness leans heavily on the development of primes and the careful tuning of its parameters. Toss in primes or recycle the parameters over and over and the whole construction becomes open to sub-exponential and pre-computation attacks.</p>
+        
+        <div class="card-green">
+            <h4>Elliptic Curve Diffie-Hellman (ECDH)</h4>
+            <p>ECDH avoids many shortcomings by relying on elliptic-curve mathematics instead of modular arithmetic. Since the elliptic-curve discrete logarithm problem (ECDLP) is far tougher to solve, ECDH can provide security with smaller keys - for example, a 256-bit ECDH key offers roughly the same strength as a 3072-bit DH key.</p>
+            <ul>
+                <li>Smaller keys with equivalent security</li>
+                <li>Faster performance</li>
+                <li>Each party can pick its own curve settings</li>
+                <li>Stronger resistance to pre-computation attacks</li>
+                <li>Widely embraced in TLS 1.3 and SSH</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Code Description -->
+    <div class="slide">
+        <h2>2. Code Description</h2>
+        
+        <h3>2.1 How the Program Works</h3>
+        <p>For our program, we implemented a main program which tests all of our implementations, supported by six classes. Each class had a distinct rule, the parameters class stores and displayed our public parameters which included the prime number and primitive root. The key exchange class generated private and public keys and computed a shared secret key. We also had an encryptor class which handled encrypting and decrypting messages that used the shared key. Additionally, a validator class which performs for prime checks and making sure our message length is the right length. A utilities class was implemented with the main goal of making our program run better, it had helper methods such as random generation and formatted output. Finally, we have the helpers class which manages all our user inputs and ensures correctness such as message validation loops.</p>
+    </div>
+
+    <!-- Implementation -->
+    <div class="slide">
+        <h3>2.2 Implementation of Each Part</h3>
+        
+        <h4>Key Generation</h4>
+        <div class="code-container">
+            <div class="code-header">Key Generation Implementation</div>
+            <div class="code-block">private void generateKeys() {
+this.privateKey = new BigInteger(getQ().bitLength(),
+```
+
+random).mod(getQ().subtract(BigInteger.TWO))
+.add(BigInteger.ONE);
+// 1 <= x <= q-2
+this.publicKey = getAlpha().modPow(privateKey, getQ());
+// Y = α^x mod q
+}</div>
+</div>
+<p>To generate a private key, we would choose a random number from 1 to the prime number (q) minus 2. Then we find the public key (y) using the formula Y = α^x mod q.</p>
+
+```
+        <h4>Encryption</h4>
+        <div class="code-container">
+            <div class="code-header">Encryption Implementation</div>
+            <div class="code-block">String encrypt(String msg, BigInteger sharedKey) throws Exception {
+byte[] msgByte = msg.getBytes(StandardCharsets.UTF_8); // converts the text into bytes
+byte[] keyByte = Key(sharedKey); // uses the key function to store the data
+byte[] cipherMsgByte = xor(msgByte, keyByte); // ciphers the text
+return Base64.getEncoder().encodeToString(cipherMsgByte);
+```
+
+}</div>
+</div>
+<p>To encrypt the message, we convert the message into Byte using the getBytes function, storing each byte in the array. Next, we use the Key method to convert the shared key to a byte then hashing the key, converting it into SHA-256, making it more difficult to decrypt. Lastly we cipher the message using the xor function which decrypts the bytes using the public key formula.</p>
+
+```
+        <h4>Decryption</h4>
+        <div class="code-container">
+            <div class="code-header">Decryption Implementation</div>
+            <div class="code-block">String decrypt(String base64cipherMsg, BigInteger sharedKey) throws Exception {
+byte[] keyByte = Key(sharedKey); // stores data
+byte[] cipherMsgByte = Base64.getDecoder().decode(base64cipherMsg); // decodes the data
+byte[] msgByte = xor(cipherMsgByte, keyByte); // uses the same equation to return it to a readable text
+return new String(msgByte, StandardCharsets.UTF_8);
+```
+
+}</div>
+</div>
+<p>For decryption, it’s similar to encryption with a few differences. It starts with the Key method, hashing and organizing the bytes first then decoding the message using the getDecoder() function. Lastly it uses the xor again to return it into readable texts.</p>
+</div>
+
+```
+    <!-- Challenges -->
+    <div class="slide">
+        <h3>2.3 Challenges Faced and How We Overcame Them</h3>
+        
+        <div class="card-yellow">
+            <h4>Input Validation Issues</h4>
+            <p>Invalid user input, such as non-prime numbers or message lengths less than 20 characters, caused the program to crash. We added relentless loops of verification that repeatedly ask the user instead of terminating execution.</p>
+        </div>
+        
+        <div class="card-yellow">
+            <h4>Class Integration Problems</h4>
+            <p>Because every class was programmed separately, variable names and method types needed to be standardized. The team standardized method names such as generatePublicKey() and computeSharedKey() and inserted temporary placeholders in Main until all classes were finished.</p>
+        </div>
+        
+        <div class="card-yellow">
+            <h4>Mathematical Calculation Errors</h4>
+            <p>Preliminary tests were producing incorrect values in mathematical calculations for the public and common keys due to the absence of modular exponentiation logic. Using Java's native modPow() method fixed this issue.</p>
+        </div>
+        
+        <div class="card-yellow">
+            <h4>Encryption/Decryption Discrepancies</h4>
+            <p>Contradictions between encrypted and decrypted messages due to discrepancies in byte array handling. Altering the Encryptor class to use StandardCharsets.UTF_8 and Base64 encoding ensured all messages decrypted flawlessly.</p>
+        </div>
+    </div>
+
+    <!-- Results -->
+    <div class="slide">
+        <h2>3. Results and Test Cases</h2>
+        
+        <h3>Successful run with matching shared keys and valid messages</h3>
+        <div class="screenshot">
+            <img src="/mnt/user-data/uploads/image.jpeg" alt="Test Results">
+            <p class="screenshot-caption">Autogenerated keys - Successful run showing matching shared keys</p>
+        </div>
+    </div>
+
+    <!-- Team Contribution -->
+    <div class="slide">
+        <h2>4. Team Contribution</h2>
+        <p>It was a collaborative project that required everyone to coordinate, communicate, and work together. All members of the group collaborated on both the Java implementation and the report, allowing for simultaneous technical and theoretical progress.</p>
+        
+        <div class="team-card">
+            <h4>Yara Alzamel</h4>
+            <p>Yara Alzamel established the foundation of the program by declaring the public parameters and helper methods upon which the rest of the system depended. She was responsible for designing the classes that are responsible for the generation of the public values, i.e., the prime number and primitive root, and adding helper functions for normalizing random number generation and formatted print. She was responsible for the foundation on which the rest of the program was constructed and also to describe the program's initialization and overall flow in the report.</p>
+        </div>
+        
+        <div class="team-card">
+            <h4>Fai Bin Khanjar</h4>
+            <p>Fai Bin Khanjar took care of the underlying mathematics of implementing the Diffie–Hellman algorithm. She implemented key generation with private keys on both sides, calculated their corresponding public keys, and made sure that the resulting shared secret key generated was identical on both sides. She created a numerical example based on the report to explain step-by-step algorithm calculation. Her attentiveness during modular arithmetic verification and accuracy result checks helped to ensure the program's correctness.</p>
+        </div>
+        
+        <div class="team-card">
+            <h4>Aljoharah Albawardi</h4>
+            <p>Aljoharah Albawardi developed the encryption and decryption components of the project. She implemented a lightweight encryption mechanism that used the shared secret key derived from Fai's module. Her focus was on converting theoretical key exchange into practical message security, ensuring that messages longer than twenty characters could be securely encrypted and successfully decrypted. She also conducted test runs, captured the output by taking screenshots, and mentioned security advantages and restrictions of the algorithm in the report.</p>
+        </div>
+        
+        <div class="team-card">
+            <h4>Shoug Alomran</h4>
+            <p>Shoug Alomran executed validation, integration, and assembly of the program last. She used input validation to ensure that users enter a valid prime number and that the size of the message complies with project requirements. She applied all modules—key generation, key exchange, encryption, and output formatting—inside the driver program, tested the whole program running, and managed exceptions so that the program ran flawlessly end to end. Apart from her technical contribution, she also integrated the group's written elements into the final report, maintaining the structure, tone, and format intact.</p>
+        </div>
+        
+        <p>The team achieved coordination primarily by using GitHub as a version manager and code sharer, allowing each member to push and sign off on changes. Regular group meetings were held to facilitate communication and share progress updates and integration concerns. Each team member examined other members' work and participated in final test sessions to confirm that the system produced accurate results and that all project criteria were met. This enabled the team to efficiently divide the burden, balance theory and practice, and deliver a well-documented, unified project.</p>
+    </div>
+
+    <!-- Conclusion -->
+    <div class="slide">
+        <h2>5. Conclusion</h2>
+        <p>This project provided a nice insight into how secure communication systems operate using modular arithmetic and key exchange concepts. Implementing the Diffie-Hellman algorithm was an example in demonstration how two parties can safely come to agreement on a shared secret key even across an insecure medium using concepts like modular exponentiation and prime number verification. Walking through the code reinforced our admiration for how public and private keys mathematically interact to maintain confidentiality.</p>
+        
+        <p>Apart from the technical details, the project also highlighted the importance of coordination and teamwork among members. Each class such as Parameters, KeyExchange and Encryptor depended on the others, thus the need for frequent communication and sequential testing to achieve flawless integration. Debugging also taught patience and precision, especially in identifying errors of logic or validation affecting program flow.</p>
+        
+        <div class="card">
+            <h4>Future Growth Opportunities</h4>
+            <p>The project can be expanded by using stronger methods of encryption, such as AES for message encryption, or by modifying the KeyExchange class to accommodate the real elliptic-curve parameters for optimal ECDH performance.</p>
+        </div>
+    </div>
+
+    <!-- References -->
+    <div class="slide">
+        <h2>6. References and Resources</h2>
+        
+        <div class="reference">Ambatipudi, S. (2024, June 6). Cryptographic advancements enabled by Diffie–Hellman. ISACA Journal, Volume 3.</div>
+        
+        <div class="reference">Boneh, D., & Shparlinski, I. E. (2001). On the unpredictability of bits of the Elliptic Curve Diffie–Hellman scheme. In J. Kilian (Ed.), Advances in Cryptology – CRYPTO 2001 (pp. 201–212). Springer.</div>
+        
+        <div class="reference">Diffie, W., & Hellman, M. E. (1976). New directions in cryptography. IEEE Transactions on Information Theory, 22(6), 644–654.</div>
+        
+        <div class="reference">Haakegaard, R., & Lang, J. (2015). The Elliptic Curve Diffie–Hellman (ECDH). University of California, Santa Barbara.</div>
+        
+        <div class="reference">IEEE. (2012). Automated Analysis of Diffie-Hellman Protocols and Advanced Security Properties.</div>
+        
+        <div class="reference">Krawczyk, Hugo. (2005). HMQV: A High-Performance Secure Diffie-Hellman Protocol. Springer Berlin Heidelberg.</div>
+        
+        <div class="reference">Odlyzko, A. M. (2014). Discrete logarithms in finite fields and their cryptographic significance.</div>
+        
+        <div class="reference">Roy, A., Datta, A., & Mitchell, J. C. (2007). Formal proofs of cryptographic security of Diffie–Hellman–based protocols. Stanford University.</div>
+        
+        <div class="reference">Shoug Alomran, Yara, Fai, & Aljoharah. (2025). CS285 – Secure Key Exchange Project [Source code]. GitHub.</div>
+    </div>
+
+    <!-- Appendix -->
+    <div class="slide">
+        <h2>Appendix – Full Source Code</h2>
+        
+        <div class="code-container">
+            <div class="code-header">Main Class</div>
+            <div class="code-block">import java.math.BigInteger;
+```
+
+import java.security.SecureRandom;
+import java.util.Scanner;
+
+public class Main {
+private static final SecureRandom random = new SecureRandom();
+
+```
+public static void main(String[] args) {
+    Scanner input = new Scanner(System.in);
+    System.out.println("--- Royal Convoy - Secure Communication (Diffie-Hellman / ECDH Demo) ---");
+    System.out.println("This program demonstrates how the control center and vehicles exchange keys securely.\n");
+
+    while (true) {
+        System.out.println("MAIN MENU:");
+        System.out.println("1) Numerical Example (Section 1.3 demo - fixed values)");
+        System.out.println("2) Numerical Example (auto-generated values)");
+        System.out.println("3) Live Mode (manual / auto parameters and private keys)");
+        System.out.println("0) Exit");
+        System.out.print("Choose an option: ");
+        String choice = input.nextLine().trim();
+
+        switch (choice) {
+            case "1":
+                runFixedExample();
+                break;
+            case "2":
+                runRandomExample(input);
+                break;
+            case "3":
+                runLiveMode(input);
+                break;
+            case "0":
+                System.out.println("Goodbye!");
+                input.close();
+                return;
+            default:
+                System.out.println("Invalid choice. Please enter 1, 2, 3, or 0.\n");
+                break;
+        }
+    }
+}
+
+private static void runFixedExample() {
+    System.out.println("\n--- Numerical Example (Section 1.3 - Fixed) ---");
+    BigInteger q = BigInteger.valueOf(23);
+    BigInteger alpha = BigInteger.valueOf(5);
+    Parameters storage = new Parameters(q, alpha);
+
+    BigInteger Xa = BigInteger.valueOf(6);
+    BigInteger Xb = BigInteger.valueOf(15);
+
+    BigInteger Ya = alpha.modPow(Xa, q);
+    BigInteger Yb = alpha.modPow(Xb, q);
+
+    BigInteger kA = Yb.modPow(Xa, q);
+    BigInteger kB = Ya.modPow(Xb, q);
+
+    System.out.println("To give an example, both 2 cars and the control center need a safe way to communicate.");
+    System.out.println(storage.toString());
+    System.out.println("Car 1 chooses Xa = 6 → Ya = 5^6 mod 23 = " + Ya);
+    System.out.println("Car 2 chooses Xb = 15 → Yb = 5^15 mod 23 = " + Yb);
+    System.out.println("Each car computes the shared key:");
+    System.out.println("Car 1: 19^6 mod 23 = " + kA);
+    System.out.println("Car 2: 8^15 mod 23 = " + kB);
+    System.out.println("Both cars share the same key: " + kA + "\n");
+
+    String message = "Royal convoy message remains secure through shared key exchange.";
+    System.out.println("Example message: " + message);
+    try {
+        Encryptor enc = new Encryptor();
+        String cipher = enc.encrypt(message, kA);
+        String plain = enc.decrypt(cipher, kB);
+        System.out.println("Encrypted Message = " + cipher);
+        System.out.println("Decrypted Message = " + plain);
+        System.out.println("Decryption OK = " + plain.equals(message) + "\n");
+    } catch (Exception e) {
+        System.out.println("Encryption/Decryption failed: " + e.getMessage());
+    }
+}
+
+private static void runRandomExample(Scanner input) {
+    System.out.println("\n--- Numerical Example (Auto-generated values) ---");
+    BigInteger q = BigInteger.probablePrime(8, random);
+    BigInteger alpha = BigInteger.valueOf(random.nextInt(3, q.intValue() - 1));
+    Parameters storage = new Parameters(q, alpha);
+
+    BigInteger Xa = BigInteger.valueOf(random.nextInt(2, q.intValue() - 2));
+    BigInteger Xb = BigInteger.valueOf(random.nextInt(2, q.intValue() - 2));
+
+    BigInteger Ya = alpha.modPow(Xa, q);
+    BigInteger Yb = alpha.modPow(Xb, q);
+
+    BigInteger kA = Yb.modPow(Xa, q);
+    BigInteger kB = Ya.modPow(Xb, q);
+
+    System.out.println("Automatically generated example parameters and results:");
+    System.out.println(storage.toString());
+    System.out.println("Car 1 (Xa): " + Xa + " --> Ya = " + Ya);
+    System.out.println("Car 2 (Xb): " + Xb + " --> Yb = " + Yb);
+    System.out.println("Shared key for Car 1: " + kA);
+    System.out.println("Shared key for Car 2: " + kB);
+    System.out.println("Keys match: " + kA.equals(kB) + "\n");
+
+    String message = Helpers.promptMessage(input);
+    try {
+        Encryptor enc = new Encryptor();
+        String cipher = enc.encrypt(message, kA);
+        String plain = enc.decrypt(cipher, kB);
+        System.out.println("--- Encryption Test ---");
+        System.out.println("Original Message = " + message);
+        System.out.println("Encrypted Message = " + cipher);
+        System.out.println("Decrypted Message = " + plain);
+        System.out.println("Decryption OK = " + plain.equals(message) + "\n");
+    } catch (Exception e) {
+        System.out.println("Encryption/Decryption failed: " + e.getMessage());
+    }
+}
+
+private static void runLiveMode(Scanner input) {
+    System.out.println("\n--- Live Mode ---");
+    System.out.println("You can either enter your own values for q and alpha, or let the program generate them.\n");
+
+    System.out.println("Choose parameter mode:");
+    System.out.println("a) Auto-generate q and alpha");
+    System.out.println("b) Enter manually");
+    System.out.print("Your choice (a/b): ");
+    String paramChoice = input.nextLine().trim().toLowerCase();
+
+    BigInteger q, alpha;
+    if ("b".equals(paramChoice)) {
+        q = Helpers.promptPrime(input);
+        alpha = Helpers.promptAlpha(input, q);
+    } else {
+        q = BigInteger.probablePrime(8, random);
+        alpha = BigInteger.valueOf(random.nextInt(3, q.intValue() - 1));
+        System.out.println("Automatically generated parameters:");
+        System.out.println("q = " + q + ", alpha = " + alpha + "\n");
+    }
+
+    Parameters storage = new Parameters(q, alpha);
+    System.out.println(storage + "\n");
+
+    System.out.println("Choose private-key mode:");
+    System.out.println("a) Auto-generate private keys");
+    System.out.println("b) Enter private keys manually");
+    System.out.print("Your choice (a/b): ");
+    String keyChoice = input.nextLine().trim().toLowerCase();
+
+    BigInteger Xa, Xb;
+    if ("b".equals(keyChoice)) {
+        Xa = Helpers.promptPrivateKey(input, q, "Enter private key for Car 1: ");
+        Xb = Helpers.promptPrivateKey(input, q, "Enter private key for Car 2: ");
+    } else {
+        Xa = BigInteger.valueOf(random.nextInt(2, q.intValue() - 2));
+        Xb = BigInteger.valueOf(random.nextInt(2, q.intValue() - 2));
+        System.out.println("Auto private keys generated: Xa = " + Xa + ", Xb = " + Xb + "\n");
+    }
+
+    BigInteger Ya = alpha.modPow(Xa, q);
+    BigInteger Yb = alpha.modPow(Xb, q);
+
+    BigInteger kA = Yb.modPow(Xa, q);
+    BigInteger kB = Ya.modPow(Xb, q);
+
+    if (!kA.equals(kB)) {
+        System.out.println("Shared keys do not match. Please try again.\n");
+        return;
+    }
+
+    String message = Helpers.promptMessage(input);
+    try {
+        Encryptor enc = new Encryptor();
+        String cipher = enc.encrypt(message, kA);
+        String plain = enc.decrypt(cipher, kB);
+
+        System.out.println("\n--- RESULTS ---");
+        System.out.println("q = " + q);
+        System.out.println("alpha = " + alpha);
+        System.out.println("Xa = " + Xa);
+        System.out.println("Xb = " + Xb);
+        System.out.println("Ya = " + Ya);
+        System.out.println("Yb = " + Yb);
+        System.out.println("Shared key = " + kA);
+        System.out.println("Original Message = " + message);
+        System.out.println("Encrypted Message = " + cipher);
+        System.out.println("Decrypted Message = " + plain);
+        System.out.println("Decryption OK = " + plain.equals(message));
+        System.out.println("Secure session established between convoy vehicles and control center.\n");
+    } catch (Exception e) {
+        System.out.println("Encryption/Decryption failed: " + e.getMessage());
+    }
+}
+```
+
+}</div>
+</div>
+
+```
+        <div class="code-container">
+            <div class="code-header">Parameters Class</div>
+            <div class="code-block">import java.math.BigInteger;
+```
+
+public class Parameters {
+private BigInteger q;
+private BigInteger alpha;
+
+```
+public Parameters(BigInteger q, BigInteger alpha) {
+    this.q = q;
+    this.alpha = alpha;
+}
+
+public BigInteger getQ() {
+    return q;
+}
+
+public BigInteger getAlpha() {
+    return alpha;
+}
+
+@Override
+public String toString() {
+    return "Public Parameters:\n" +
+           "Prime number (q): " + q + "\n" +
+           "Primitive root (alpha): " + alpha;
+}
+```
+
+}</div>
+</div>
+
+```
+        <div class="code-container">
+            <div class="code-header">Utils Class</div>
+            <div class="code-block">import java.math.BigInteger;
+```
+
+import java.security.SecureRandom;
+
+public class Utils {
+private static final SecureRandom secureRandom = new SecureRandom();
+
+```
+public static BigInteger getRandom(BigInteger upperLimit) {
+    BigInteger result;
+    do {
+        result = new BigInteger(upperLimit.bitLength(), secureRandom);
+    } while (result.compareTo(BigInteger.ONE) < 0 || result.compareTo(upperLimit) >= 0);
+    return result;
+}
+
+public static void printLine(String label, Object value) {
+    System.out.println(label + ": " + value);
+}
+
+public static byte[] normalizeKeyBytes(BigInteger key) {
+    byte[] bytes = key.toByteArray();
+    if (bytes.length > 1 && bytes[0] == 0) {
+        byte[] normalized = new byte[bytes.length - 1];
+        System.arraycopy(bytes, 1, normalized, 0, normalized.length);
+        return normalized;
+    }
+    return bytes;
+}
+```
+
+}</div>
+</div>
+
+```
+        <div class="code-container">
+            <div class="code-header">Validator Class</div>
+            <div class="code-block">import java.math.BigInteger;
+```
+
+public class Validator {
+public static boolean isPrime(BigInteger q) {
+if (q == null)
+return false;
+if (q.compareTo(BigInteger.valueOf(3)) < 0)
+return false;
+return q.isProbablePrime(100);
+}
+
+```
+public static boolean isAlphaInRange(BigInteger alpha, BigInteger q) {
+    return alpha != null && q != null
+            && alpha.compareTo(BigInteger.ONE) > 0
+            && alpha.compareTo(q) < 0;
+}
+
+public static boolean isValidMessage(String message) {
+    return message != null && message.trim().length() > 20;
+}
+```
+
+}</div>
+</div>
+
+```
+        <div class="code-container">
+            <div class="code-header">Key Exchange Class</div>
+            <div class="code-block">import java.math.BigInteger;
+```
+
+import java.security.SecureRandom;
+
+public class KeyExchange extends Parameters {
+private SecureRandom random = new SecureRandom();
+private BigInteger privateKey;
+private BigInteger publicKey;
+
+```
+public KeyExchange(BigInteger q, BigInteger alpha) {
+    super(q, alpha);
+    generateKeys();
+}
+
+private void generateKeys() {
+    this.privateKey = new BigInteger(getQ().bitLength(),
+```
+
+random).mod(getQ().subtract(BigInteger.TWO))
+.add(BigInteger.ONE);
+this.publicKey = getAlpha().modPow(privateKey, getQ());
+}
+
+```
+public BigInteger computeSharedKey(BigInteger otherPublic) {
+    return otherPublic.modPow(privateKey, getQ());
+}
+
+public BigInteger getPrivateKey() {
+    return privateKey;
+}
+
+public BigInteger getPublicKey() {
+    return publicKey;
+}
+```
+
+}</div>
+</div>
+
+```
+        <div class="code-container">
+            <div class="code-header">Encryptor Class</div>
+            <div class="code-block">import java.math.BigInteger;
+```
+
+import java.util.Base64;
+import java.security.MessageDigest;
+import java.nio.charset.StandardCharsets;
+
+public class Encryptor {
+private byte[] Key(BigInteger key) throws Exception {
+MessageDigest msgDigest = MessageDigest.getInstance(“SHA-256”);
+byte[] ArrayByte = key.toByteArray();
+return msgDigest.digest(ArrayByte);
+}
+
+```
+private byte[] xor(byte[] data, byte[] key) {
+    byte[] xorArray = new byte[data.length];
+    for (int i = 0; i < data.length; i++) {
+        xorArray[i] = (byte) (data[i] ^ key[i % key.length]);
+    }
+    return xorArray;
+}
+
+String encrypt(String msg, BigInteger sharedKey) throws Exception {
+    byte[] msgByte = msg.getBytes(StandardCharsets.UTF_8);
+    byte[] keyByte = Key(sharedKey);
+    byte[] cipherMsgByte = xor(msgByte, keyByte);
+    return Base64.getEncoder().encodeToString(cipherMsgByte);
+}
+
+String decrypt(String base64cipherMsg, BigInteger sharedKey) throws Exception {
+    byte[] keyByte = Key(sharedKey);
+    byte[] cipherMsgByte = Base64.getDecoder().decode(base64cipherMsg);
+    byte[] msgByte = xor(cipherMsgByte, keyByte);
+    return new String(msgByte, StandardCharsets.UTF_8);
+}
+
+public static void validateMsg(String msg) {
+    if (msg == null) {
+        throw new IllegalArgumentException("Message cannot be empty");
+    }
+}
+
+public static void validateCipherMsg(String cipherMsg) {
+    if (cipherMsg == null) {
+        throw new IllegalArgumentException("Cipher message cannot be empty");
+    }
+}
+```
+
+}</div>
+</div>
+
+```
+        <div class="code-container">
+            <div class="code-header">Helpers Class</div>
+            <div class="code-block">import java.math.BigInteger;
+```
+
+import java.security.SecureRandom;
+import java.util.Scanner;
+
+public class Helpers {
+public static BigInteger promptPrime(Scanner input) {
+while (true) {
+try {
+System.out.print(“Enter a prime q (≥ 3): “);
+BigInteger q = new BigInteger(input.nextLine().trim());
+if (Validator.isPrime(q))
+return q;
+System.out.println(“That’s not a prime number. Try again.\n”);
+} catch (Exception e) {
+System.out.println(“Invalid input. Please type an integer.\n”);
+}
+}
+}
+
+```
+public static BigInteger promptAlpha(Scanner in, BigInteger q) {
+    while (true) {
+        try {
+            BigInteger alpha = new BigInteger(in.nextLine().trim());
+            if (Validator.isAlphaInRange(alpha, q))
+                return alpha;
+            System.out.println("Alpha must be > 1 and < q. Try again.\n");
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please type an integer.\n");
+        }
+    }
+}
+
+public static BigInteger promptPrivateKey(Scanner input, BigInteger q, String message) {
+    System.out.println("\nPrivate keys must be integers between 1 and q-2 (inclusive).");
+    BigInteger min = BigInteger.ONE;
+    BigInteger max = q.subtract(BigInteger.TWO);
+    while (true) {
+        try {
+            System.out.print(message);
+            BigInteger privateKey = new BigInteger(input.nextLine().trim());
+            if (privateKey.compareTo(min) >= 0 && privateKey.compareTo(max) <= 0)
+                return privateKey;
+            System.out.println("Invalid range. Please enter a value between 1 and q-2.\n");
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please type an integer.\n");
+        }
+    }
+}
+
+public static BigInteger randomPrivateKey(BigInteger q, SecureRandom randomNo) {
+    BigInteger privateKey;
+    BigInteger min = BigInteger.ONE;
+    BigInteger max = q.subtract(BigInteger.TWO);
+    while (true) {
+        privateKey = new BigInteger(q.toString()).abs();
+        if (privateKey.compareTo(min) >= 0 && privateKey.compareTo(max) <= 0) {
+            return privateKey;
+        }
+    }
+}
+
+public static String promptMessage(Scanner input) {
+    System.out.println("\nStep 3: Enter the message to be securely sent between vehicles.");
+    while (true) {
+        System.out.print("Enter a message (> 20 characters): ");
+        String message = input.nextLine();
+        if (Validator.isValidMessage(message))
+            return message;
+        System.out.println("Message too short. Please try again (must be > 20 characters).\n");
+    }
+}
+```
+
+}</div>
+</div>
+</div>
+
+```
+</div>
+```
+
+</body>
+</html>
