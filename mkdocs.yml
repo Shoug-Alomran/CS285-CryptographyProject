@@ -27,7 +27,6 @@ theme:
 nav:
   - Home: index.md
   - About: about.md
-  - CS285 Project Report: cs285_full.html
   - Introduction: introduction.md
   - Implementation: implementation.md
   - Results: results.md
@@ -43,6 +42,9 @@ nav:
       - Helpers: code/helpers.md
       - Validator: code/validator.md
       - Utils: code/utils.md
+  - CS285 Report:
+      - View Report: cs285/report.md
+      - Full HTML Report: cs285/dh-report.html
 
 markdown_extensions:
   - admonition
