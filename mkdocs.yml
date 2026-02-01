@@ -44,7 +44,7 @@ nav:
       - Utils: code/utils.md
   - Report:
       - View Report: report/report.md
-
+  - Copyright: copyright.md
 markdown_extensions:
   - admonition
   - toc:
