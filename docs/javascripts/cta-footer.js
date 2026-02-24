@@ -1,6 +1,6 @@
 (function () {
   const EMAIL = "inquiry@shoug-tech.com";
-
+  const MAIN_WEBSITE = "https://shoug-tech.com/";
   function ensureTrailingSlash(s) {
     return s.endsWith("/") ? s : s + "/";
   }
@@ -23,7 +23,7 @@
           return ensureTrailingSlash(new URL(b, window.location.origin).href);
         }
       }
-    } catch (e) {}
+    } catch (e) { }
 
     // 2) <base href="..."> is used by MkDocs Material; baseEl.href is absolute and correct
     const baseEl = document.querySelector('base[href]');
@@ -138,7 +138,12 @@
             <div class="footer-col__title">Contact</div>
             <a class="footer-link" href="mailto:${EMAIL}">${EMAIL}</a>
           </div>
-
+<div class="footer-col">
+  <div class="footer-col__title">Website</div>
+  <a class="footer-link" href="${MAIN_WEBSITE}" target="_blank" rel="noopener">
+    shoug-tech.com
+  </a>
+</div>
           <div class="footer-col">
             <div class="footer-col__title">Code</div>
             <a class="footer-link" href="${LINKS.codeMain}">Main</a>
