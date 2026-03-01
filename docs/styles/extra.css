@@ -393,10 +393,10 @@
   width: 100%;
   max-width: none;
   margin: 0;
-  padding: 2.2rem clamp(1rem, 3vw, 3rem) 1.3rem;
+  padding: 1.2rem clamp(1rem, 2.2vw, 2.2rem) 0.8rem;
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 2.65fr);
-  gap: 1.8rem;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 2.75fr);
+  gap: 1rem;
 }
 
 .custom-footer__label {
@@ -409,21 +409,22 @@
 }
 
 .custom-footer__project {
-  margin: 0.4rem 0 0;
-  font-size: 1.45rem;
+  margin: 0.25rem 0 0;
+  font-size: 1.15rem;
   line-height: 1.2;
   font-weight: 900;
 }
 
 .custom-footer__tagline {
-  margin-top: 0.75rem;
+  margin-top: 0.45rem;
   max-width: 56ch;
   color: rgba(250, 254, 255, 0.96);
+  font-size: 0.9rem;
 }
 
 .custom-footer__subscribe {
-  margin-top: 1rem;
-  max-width: 33rem;
+  margin-top: 0.6rem;
+  max-width: 30rem;
 }
 
 .custom-footer__subscribe-label {
@@ -465,7 +466,7 @@
 }
 
 .custom-footer__subscribe-note {
-  margin: 0.42rem 0 0;
+  margin: 0.3rem 0 0;
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.9);
 }
@@ -481,11 +482,11 @@
 .custom-footer__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.15rem;
+  gap: 0.8rem;
 }
 
 .footer-col__title {
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-bottom: 0.58rem;
@@ -497,7 +498,8 @@
   display: block;
   color: rgba(255, 255, 255, 0.97) !important;
   text-decoration: none;
-  padding: 0.22rem 0;
+  padding: 0.14rem 0;
+  font-size: 0.86rem;
 }
 
 .footer-link:hover {
@@ -509,7 +511,7 @@
   width: 100%;
   max-width: none;
   margin: 0;
-  padding: 0.8rem clamp(1rem, 3vw, 3rem) 1.1rem;
+  padding: 0.55rem clamp(1rem, 2.2vw, 2.2rem) 0.7rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.9rem;
@@ -572,7 +574,7 @@ summary:focus-visible,
   }
 }
 
-@media (max-width: 95em) {
+@media (max-width: 78em) {
   .custom-footer__inner {
     grid-template-columns: 1fr;
   }
