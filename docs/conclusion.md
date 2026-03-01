@@ -1,22 +1,27 @@
 # Conclusion
 
-This project successfully demonstrates the **Diffie–Hellman (DH) key exchange** in Java, showing how two parties can derive the same secret key over an insecure channel and then use that key to encrypt and decrypt a message. The implementation mirrors the mathematical steps precisely and validates correctness through consistent decryption results.
+<div class="purpose-note"><strong>Purpose:</strong> Summarize project outcomes, learning impact, and practical next steps.</div>
 
-## What was achieved
-- Implemented DH key establishment with clear separation of concerns across classes.
-- Added robust input validation for \( q \), \( \alpha \), private keys, and message length.
-- Verified that both parties compute an identical shared key before encryption/decryption.
-- Documented the design, workflow, and test cases with reproducible outputs.
+The project successfully demonstrates **Diffie-Hellman key exchange** in Java and verifies that both participants compute the same secret key before encrypted communication.
 
-## What we learned
-- How security rests on the hardness of the **discrete logarithm problem**.
-- The importance of **input validation** and **error handling** in crypto demos.
-- Why DH by itself does **not** provide authentication and must be combined with identity checks in practice.
+## What Was Achieved
 
-## Limitations & future work
-- **Authentication**: Integrate digital signatures or certificates to prevent MitM attacks.
-- **Parameter generation**: Add safe prime / generator selection utilities for stronger defaults.
-- **Modern variants**: Provide an **ECDH** path (elliptic curves) for smaller keys and faster performance.
-- **Testing**: Extend property-based tests and large-prime scenarios for stronger assurance.
+- Implemented complete DH key establishment flow with clear class responsibilities.
+- Added input validation for \( q \), \( \alpha \), private-key ranges, and message length.
+- Verified end-to-end encryption/decryption consistency using the shared secret.
+- Produced report and test evidence aligned with course expectations.
 
-In summary, the project meets the learning objectives of CS285 by turning theory into a working system and clarifying where real-world protocols extend DH for production-grade security.
+## What Was Learned
+
+- How discrete mathematics directly drives public-key protocol behavior.
+- Why validation and controlled input flow are critical in cryptographic software.
+- Why DH alone is insufficient without an authentication layer.
+
+## Limitations and Future Work
+
+- Add authenticated key exchange support (for example, signature-backed identity checks).
+- Improve parameter generation defaults (safe-prime and generator policies).
+- Add an ECDH path for modern performance/security comparison.
+- Expand automated tests, including larger parameter scenarios.
+
+Overall, the project meets the CS285 learning objective of turning theory into a reproducible cryptographic implementation.

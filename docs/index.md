@@ -1,41 +1,33 @@
-# CS285 – Secure Key Exchange Project
+# Discrete Mathematics for Computing: Secure Key Exchange Project
 
-### Prince Sultan University
+<div class="purpose-note"><strong>Purpose:</strong> Provide a clear, course-aligned overview of the CS285 project, its learning goals, and its cryptographic scope.</div>
 
-**Course:** CS285 – Discrete Mathematics for Computing  
-**Project Title:** Secure Key Exchange System (Diffie–Hellman Demonstration)  
+**University:** Prince Sultan University  
+**Course:** CS285 - Discrete Mathematics for Computing  
+**Project Title:** Secure Key Exchange System (Diffie-Hellman Demonstration)  
 **Instructor:** Dr. Jalila Zouhair  
-**Submission Date:** 9 November 2025  
+**Submission Date:** November 9, 2025
 
-**Developed by:**  
+**Team Members**
 
-- Shoug Fawaz Alomran  
-- Fai Mohammad Khanjar  
-- Aljoharah Waleed Albawardi  
-- Yara Mutlaq Alzamel  
-
----
+- Shoug Fawaz Alomran
+- Fai Mohammad Khanjar
+- Aljoharah Waleed Albawardi
+- Yara Mutlaq Alzamel
 
 ## Abstract
 
-This project demonstrates how two entities can securely establish a shared secret key using **public-key cryptography principles**.  
-The implemented system applies the **Diffie–Hellman key exchange algorithm**, which enables the participants to exchange information over an insecure channel without directly transmitting any secret values.
+This project demonstrates how two participants can establish a shared secret using **public-key cryptography**. The implementation uses the **Diffie-Hellman key exchange algorithm**, allowing key establishment over an insecure channel without transmitting private values.
 
-The resulting shared secret key can then be used to **encrypt and decrypt messages**, ensuring data confidentiality and integrity.  
-This simulation also includes **input validation**, **error handling**, and the ability to operate in two modes: a **numerical example** (for demonstration) and a **live mode** (for user interaction).
+After the shared secret is derived, the system uses it for message encryption and decryption. The project also includes validation checks, error handling, and two operating modes: a guided numerical example and an interactive live mode.
 
----
+## Learning Objectives
 
-## Objectives
+- Apply discrete mathematics concepts used in public-key cryptography.
+- Implement Diffie-Hellman key exchange in Java.
+- Verify that both participants derive the same shared secret.
+- Use the shared secret for encryption and decryption flow validation.
+- Document architecture, code behavior, and test evidence in a reproducible format.
 
-- Understand the **mathematical foundation** behind public-key cryptography.  
-- Implement the **Diffie–Hellman algorithm** in Java.  
-- Validate that both participants compute **the same shared secret key**.  
-- Use the shared key to **encrypt and decrypt messages**.  
-- Apply **input validation** and **robust error handling**.  
-- Document the algorithm, code, and results according to the official project format.
-
----
-
-!!! tip "Key Idea"
-    The security of the Diffie–Hellman exchange depends on the difficulty of solving the **discrete logarithm problem**, making it practically impossible for an attacker to derive the private keys from the public information.
+!!! tip "Key Insight"
+    Diffie-Hellman security relies on the practical difficulty of solving the discrete logarithm problem for large parameter choices.

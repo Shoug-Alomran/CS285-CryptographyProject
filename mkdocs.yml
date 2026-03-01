@@ -1,5 +1,5 @@
-site_name: CS285 - Secure Key Exchange Project
-site_description: Java implementation, docs, results, and team credits
+site_name: Discrete Mathematics for Computing
+site_description: CS285 secure key exchange documentation, implementation notes, and results
 site_url: https://shoug-alomran.github.io/CS285-CryptographyProject/
 copyright: © 2026 Shoug Fawaz Alomran · All rights reserved
 
@@ -8,19 +8,20 @@ theme:
   language: en
   features:
     - navigation.top
+    - navigation.tabs
     - content.code.copy
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: green
+      accent: light green
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: green
+      accent: light green
       toggle:
         icon: material/white-balance-sunny
         name: Switch to light mode
@@ -46,6 +47,7 @@ nav:
   - Report:
       - View Report: report/report.md
   - Copyright: copyright.md
+
 markdown_extensions:
   - admonition
   - toc:

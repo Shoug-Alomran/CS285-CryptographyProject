@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://secure-key-exchange.shoug-tech.com/sitemap.xml

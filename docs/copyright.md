@@ -1,31 +1,27 @@
-# Copyright & Usage Policy
+# Copyright and Usage Policy
 
 © 2026 Shoug Fawaz Alomran. All rights reserved.
 
-All content published under this domain and its subdomains, including:
+<div class="purpose-note"><strong>Purpose:</strong> Clarify permitted educational use and restrictions for project assets and documentation.</div>
 
-- Software projects
-- Source code
-- Documentation
-- Designs
-- Research
-- Written content
-
-is protected by international copyright laws.
+All content under this project domain, including software, source code, documents, visuals, research text, and supporting material, is protected by applicable copyright law.
 
 ## Permitted Use
-- Viewing and referencing for personal, educational, and non-commercial purposes
-- Quoting small portions with proper attribution
+
+- Personal, educational, and non-commercial viewing or citation.
+- Short quotations with proper attribution.
 
 ## Prohibited Use
-- Reproduction or redistribution of full projects
-- Commercial use without written permission
-- Claiming authorship of this work
+
+- Full reproduction or redistribution of complete project assets.
+- Commercial use without written permission.
+- Misattribution or claims of authorship.
 
 ## Licensing
-Specific projects may include separate licenses.  
-In case of conflict, the project-level license takes precedence.
+
+Some subprojects may include separate licenses. When present, project-level license terms override this page only where explicitly stated.
 
 ## Contact
-For permissions or licensing inquiries:
-Shoug.Alomran@Shoug-Tech.com
+
+For licensing or permission inquiries:  
+`Shoug.Alomran@Shoug-Tech.com`

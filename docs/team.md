@@ -1,10 +1,12 @@
 # Team Contribution
 
+<div class="purpose-note"><strong>Purpose:</strong> Document role distribution and accountability for implementation, validation, and documentation work.</div>
+
 | Member | Student ID | Core Contributions |
 |---|---:|---|
-| **Shoug Fawaz Abdullah Alomran** | 223410392 | Validation, integration, driver `Main`, Helpers class, test flows, report assembly, MkDocs site. |
-| **Fai Mohammad Bin Khanjar** | 223410071 | Key generation math & shared secret logic; numerical example; review of modular operations. |
-| **Aljohara Waleed A Albawardi** | 223410346 | `Encryptor` (hash → XOR stream), encryption/decryption tests, screenshots. |
-| **Yara Mutlaq Mohammed Alzamel** | 223410834 | Public parameters scaffolding, utilities, formatting helpers, program flow description. |
+| **Shoug Fawaz Abdullah Alomran** | 223410392 | Validation integration, `Main` flow, `Helpers`, testing flow design, report assembly, MkDocs site integration. |
+| **Fai Mohammad Bin Khanjar** | 223410071 | Key-generation logic, shared-secret verification, numerical example review, modular arithmetic validation. |
+| **Aljohara Waleed A Albawardi** | 223410346 | `Encryptor` implementation, encryption/decryption test scenarios, output screenshot curation. |
+| **Yara Mutlaq Mohammed Alzamel** | 223410834 | Parameter scaffolding, support utilities, output formatting, workflow documentation support. |
 
-We coordinated via Git/GitHub, standardized method names, and iterated on validation until all flows were robust.
+The team coordinated through Git/GitHub and iteratively refined validation and output consistency.

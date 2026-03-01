@@ -1,20 +1,19 @@
 # About the Project
 
-The **Secure Key Exchange System** was developed as part of the **CS285 – Discrete Mathematics for Computing** course at **Prince Sultan University**.
+<div class="purpose-note"><strong>Purpose:</strong> Define the project scope and explain how the CS285 implementation connects theory with working software.</div>
 
-This website presents the full report, source code, and implementation details of the project.  
-It demonstrates how two participants can securely establish a shared secret key using the **Diffie–Hellman key exchange algorithm**, implemented entirely in **Java**.
+The **Secure Key Exchange System** was developed for **CS285 - Discrete Mathematics for Computing** at **Prince Sultan University**.
 
----
+The website consolidates the project report, implementation notes, source code references, and test outcomes. The core demonstration shows how two participants establish a shared secret key using **Diffie-Hellman** in **Java**.
 
-## Purpose of the Project
+## Project Purpose
 
-The project’s objective is to:
+This project was designed to:
 
-1. Apply mathematical concepts of modular arithmetic and discrete logarithms.  
-2. Demonstrate secure key exchange using the **Diffie–Hellman algorithm**.  
-3. Illustrate how the shared key enables message encryption and decryption.  
-4. Reinforce understanding of public-key cryptography fundamentals.
+1. Apply modular arithmetic and discrete logarithm concepts in a practical setting.
+2. Implement Diffie-Hellman key exchange with clear parameter handling.
+3. Show how a shared secret can support encryption and decryption.
+4. Reinforce core public-key cryptography principles through reproducible examples.
 
-!!! note "Educational Goal"
-    This project serves as both a **learning tool** and a **proof-of-concept**, bridging the gap between mathematical theory and secure software implementation.
+!!! note "Educational Scope"
+    This implementation is an instructional proof-of-concept intended to bridge mathematical foundations and software execution.

@@ -1,4 +1,8 @@
-```bash
+# Main.java
+
+<div class="purpose-note"><strong>Purpose:</strong> Show the main execution flow, mode handling, and end-to-end orchestration logic.</div>
+
+```java
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Scanner;
@@ -37,7 +41,6 @@ public class Main {
         }
     }
 
-    // ─────────────── Numerical Example – Fixed (as in report) ───────────────
     private static void runFixedExample() {
         System.out.println("\n--- Numerical Example (Section 1.3 - Fixed) ---");
 
@@ -77,7 +80,6 @@ public class Main {
         }
     }
 
-    // ─────────────── Numerical Example – Random ───────────────
     private static void runRandomExample(Scanner input) {
         System.out.println("\n--- Numerical Example (Auto-generated values) ---");
 
@@ -117,7 +119,6 @@ public class Main {
         }
     }
 
-    // ─────────────── Live Mode (manual or auto q, alpha, and keys) ───────────────
     private static void runLiveMode(Scanner input) {
         System.out.println("\n--- Live Mode ---");
         System.out.println("You can either enter your own values for q and alpha, or let the program generate them.\n");

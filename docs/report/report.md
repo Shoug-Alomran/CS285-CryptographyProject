@@ -1,9 +1,10 @@
-# View & Download
+# Project Report
 
-Below is the interactive HTML report (embedded).  
-You can also **open it in a new tab** or **download it**.
+<div class="purpose-note"><strong>Purpose:</strong> Provide direct access to the final submitted report in embedded and standalone form.</div>
 
-- [Open in new tab](../report.html)
-- [Download (HTML)](../report.html)
+Use one of the following options:
 
-<iframe src="../report.html" style="width:100%; height:85vh; border:1px solid #e5e7eb; border-radius:8px;"></iframe>
+- <a href="../report.html" target="_blank" rel="noopener">Open report in new tab</a>
+- <a href="../report.html" download>Download report (HTML)</a>
+
+<iframe src="../report.html" title="CS285 project report" style="width:100%; height:85vh; border:1px solid #d1e9dc; border-radius:10px;"></iframe>
