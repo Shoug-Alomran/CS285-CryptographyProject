@@ -190,6 +190,7 @@
       <div class="custom-footer__meta">
         <span>© ${year} Shoug Fawaz Alomran</span>
         <span>All rights reserved</span>
+        <a class="custom-footer__credit" href="https://blueprint.shoug-tech.com/" target="_blank" rel="noopener">Made by Blueprint</a>
       </div>
     `;
 

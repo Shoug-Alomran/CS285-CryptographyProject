@@ -520,6 +520,17 @@
   font-weight: 600;
 }
 
+.custom-footer__credit {
+  color: #ffffff !important;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.55);
+}
+
+.custom-footer__credit:hover {
+  text-decoration-color: #ffffff;
+}
+
 /* Remove default Material footer attribution/meta */
 .md-footer-meta,
 .md-footer-meta__inner,
