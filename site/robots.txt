@@ -1,4 +1,17 @@
 User-agent: *
 Allow: /
+Disallow: /*?q=
+Disallow: /*?*q=
+Disallow: /*?query=
+Disallow: /*?*query=
+Disallow: /*?search=
+Disallow: /*?*search=
+Disallow: /*?*utm_
+Disallow: /*?*fbclid=
+Disallow: /*?*gclid=
+Disallow: /*.md
+Disallow: /*%20*
+Disallow: /search/
+Disallow: /404.html
 
 Sitemap: https://secure-key-exchange.shoug-tech.com/sitemap.xml

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+
+  {% set robots_value = none %}
+  {% if page and page.meta and page.meta.robots %}
+    {% set robots_value = page.meta.robots %}
+  {% elif page and page.meta and page.meta.noindex %}
+    {% set robots_value = "noindex,follow" %}
+  {% endif %}
+  {% if robots_value %}
+    <meta name="robots" content="{{ robots_value }}">
+  {% endif %}
+
+  <script>
+    (() => {
+      const url = new URL(window.location.href);
+      const emptyQueryKeys = new Set(["q", "query", "search"]);
+      const alwaysDropKeys = new Set([
+        "fbclid",
+        "gclid",
+        "mc_cid",
+        "mc_eid",
+        "ref",
+      ]);
+      let changed = false;
+
+      for (const key of [...url.searchParams.keys()]) {
+        const value = url.searchParams.get(key) || "";
+
+        if (emptyQueryKeys.has(key) && value.trim() === "") {
+          url.searchParams.delete(key);
+          changed = true;
+          continue;
+        }
+
+        if (alwaysDropKeys.has(key) || key.startsWith("utm_")) {
+          url.searchParams.delete(key);
+          changed = true;
+        }
+      }
+
+      if (changed) {
+        const next = `${url.pathname}${url.search}${url.hash}`;
+        window.history.replaceState({}, "", next);
+      }
+    })();
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": {{ config.site_name | tojson }},
+      "url": {{ config.site_url | tojson }},
+      "description": {{ config.site_description | default("", true) | tojson }}
+    }
+  </script>
+
+  {% if page and page.canonical_url %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": {{ page.title | default(config.site_name, true) | tojson }},
+        "url": {{ page.canonical_url | tojson }},
+        "description": {{ page.meta.description | default(config.site_description, true) | tojson }}
+      }
+    </script>
+  {% endif %}
+{% endblock %}

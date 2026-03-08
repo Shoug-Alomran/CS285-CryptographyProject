@@ -1,10 +1,14 @@
 site_name: Discrete Mathematics for Computing
 site_description: CS285 secure key exchange documentation, implementation notes, and results
 site_url: https://secure-key-exchange.shoug-tech.com/
+use_directory_urls: true
+exclude_docs: |
+  .DS_Store
 copyright: © 2026 Shoug Fawaz Alomran · All rights reserved
 
 theme:
   name: material
+  custom_dir: overrides
   logo: logo.png
   favicon: google.png
   language: en
@@ -49,6 +53,9 @@ nav:
   - Report:
       - View Report: report/report.md
   - Copyright: copyright.md
+
+plugins:
+  - search
 
 markdown_extensions:
   - admonition

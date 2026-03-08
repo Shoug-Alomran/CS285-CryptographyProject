@@ -63,6 +63,69 @@
 
     
     
+  
+
+  
+  
+  
+
+  <script>
+    (() => {
+      const url = new URL(window.location.href);
+      const emptyQueryKeys = new Set(["q", "query", "search"]);
+      const alwaysDropKeys = new Set([
+        "fbclid",
+        "gclid",
+        "mc_cid",
+        "mc_eid",
+        "ref",
+      ]);
+      let changed = false;
+
+      for (const key of [...url.searchParams.keys()]) {
+        const value = url.searchParams.get(key) || "";
+
+        if (emptyQueryKeys.has(key) && value.trim() === "") {
+          url.searchParams.delete(key);
+          changed = true;
+          continue;
+        }
+
+        if (alwaysDropKeys.has(key) || key.startsWith("utm_")) {
+          url.searchParams.delete(key);
+          changed = true;
+        }
+      }
+
+      if (changed) {
+        const next = `${url.pathname}${url.search}${url.hash}`;
+        window.history.replaceState({}, "", next);
+      }
+    })();
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Discrete Mathematics for Computing",
+      "url": "https://secure-key-exchange.shoug-tech.com/",
+      "description": "CS285 secure key exchange documentation, implementation notes, and results"
+    }
+  </script>
+
+  
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Parameters",
+        "url": "https://secure-key-exchange.shoug-tech.com/code/parameters/",
+        "description": "CS285 secure key exchange documentation, implementation notes, and results"
+      }
+    </script>
+  
+
   </head>
   
   
