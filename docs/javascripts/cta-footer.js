@@ -8,18 +8,12 @@
     return s.endsWith("/") ? s : s + "/";
   }
 
-  function getProjectRootFromPathname() {
-    const parts = window.location.pathname.split("/").filter(Boolean);
-    if (parts.length > 0) return `/${parts[0]}/`;
-    return "/";
-  }
-
   function getSiteRootHref() {
     try {
       if (typeof __md_get === "function") {
         const base = __md_get("__base");
         if (base && typeof base === "string") {
-          return ensureTrailingSlash(new URL(base, window.location.origin).href);
+          return ensureTrailingSlash(new URL(base, window.location.href).href);
         }
       }
     } catch (error) {
@@ -31,7 +25,7 @@
       return ensureTrailingSlash(new URL(".", baseEl.href).href);
     }
 
-    return ensureTrailingSlash(new URL(getProjectRootFromPathname(), window.location.origin).href);
+    return ensureTrailingSlash(window.location.origin + "/");
   }
 
   function url(path) {
