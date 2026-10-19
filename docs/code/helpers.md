@@ -1,8 +1,29 @@
-# Helpers.java
+---
+title: Helpers.java
+nav_title: Helpers
+summary: Validated input loops
+icon: clipboard
+description: Helpers class of the CS285 Diffie–Hellman key exchange project. Provide validated user-input utilities for parameters, keys and messages.
+kicker: Code · Input
+hero: Helpers<span class="grad-text">.java</span>
+lead: Provide validated user-input utilities for parameters, keys and messages.
+chips:
+  - "69 lines"
+  - "out-edge: Validator"
+  - "retry loops"
+actions:
+  - label: Architecture overview
+    href: ../../implementation/
+    icon: graph
+---
 
-<div class="purpose-note"><strong>Purpose:</strong> Provide validated user-input utilities for parameters, keys, and messages.</div>
+## Role in the system
 
-```java
+<p class="lead-in">Every prompt loops until the input is valid. Prime and base checks are delegated to <code>Validator</code>; private keys are kept in the range 1 to <code>q − 2</code>.</p>
+
+## Source
+
+```java title="Helpers.java"
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Scanner;

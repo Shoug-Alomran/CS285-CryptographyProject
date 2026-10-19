@@ -1,8 +1,29 @@
-# Utils.java
+---
+title: Utils.java
+nav_title: Utils
+summary: Random values and formatting helpers
+icon: sparkle
+description: Utils class of the CS285 Diffie–Hellman key exchange project. Supply helper routines for random values, display formatting and key-byte normalization.
+kicker: Code · Utilities
+hero: Utils<span class="grad-text">.java</span>
+lead: Supply helper routines for random values, display formatting and key-byte normalization.
+chips:
+  - "29 lines"
+  - "isolated vertex"
+  - "SecureRandom"
+actions:
+  - label: Architecture overview
+    href: ../../implementation/
+    icon: graph
+---
 
-<div class="purpose-note"><strong>Purpose:</strong> Supply helper routines for random values, display formatting, and key-byte normalization.</div>
+## Role in the system
 
-```java
+<p class="lead-in">Support routines: a uniform random <code>BigInteger</code> below a limit, a label printer and a helper that strips the sign byte from a key’s byte array.</p>
+
+## Source
+
+```java title="Utils.java"
 import java.math.BigInteger;
 import java.security.SecureRandom;
 

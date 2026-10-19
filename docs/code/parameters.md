@@ -1,8 +1,29 @@
-# Parameters.java
+---
+title: Parameters.java
+nav_title: Parameters
+summary: The public values q and α
+icon: hash
+description: Parameters class of the CS285 Diffie–Hellman key exchange project. Store and expose the public Diffie–Hellman parameters used by all participants.
+kicker: Code · Public parameters
+hero: Parameters<span class="grad-text">.java</span>
+lead: Store and expose the public Diffie–Hellman parameters used by all participants.
+chips:
+  - "27 lines"
+  - "q · α"
+  - "superclass of KeyExchange"
+actions:
+  - label: Architecture overview
+    href: ../../implementation/
+    icon: graph
+---
 
-<div class="purpose-note"><strong>Purpose:</strong> Store and expose the public Diffie-Hellman parameters used by all participants.</div>
+## Role in the system
 
-```java
+<p class="lead-in">A small value class for the two public parameters. <code>KeyExchange</code> extends it, and <code>Main</code> uses its <code>toString()</code> to print them.</p>
+
+## Source
+
+```java title="Parameters.java"
 import java.math.BigInteger;
 
 public class Parameters {

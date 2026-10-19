@@ -33,14 +33,27 @@
   background:
     linear-gradient(135deg, rgba(0, 195, 137, 0.16), transparent 36%),
     linear-gradient(230deg, rgba(33, 182, 255, 0.18), transparent 42%),
-    radial-gradient(circle at 90% 10%, rgba(127, 92, 255, 0.2), transparent 28%),
-    radial-gradient(circle at 10% 90%, rgba(255, 216, 77, 0.18), transparent 26%),
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(127, 92, 255, 0.2),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 10% 90%,
+      rgba(255, 216, 77, 0.18),
+      transparent 26%
+    ),
     linear-gradient(180deg, var(--dm-bg-a), var(--dm-bg-b));
 }
 
 .md-header,
 .md-tabs {
-  background: linear-gradient(110deg, var(--dm-header-1), var(--dm-header-2) 55%, var(--dm-header-3)) !important;
+  background: linear-gradient(
+    110deg,
+    var(--dm-header-1),
+    var(--dm-header-2) 55%,
+    var(--dm-header-3)
+  ) !important;
   color: #f8fcff !important;
 }
 
@@ -101,7 +114,11 @@
   letter-spacing: 0.05em;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.6);
-  background: linear-gradient(90deg, rgba(255, 216, 77, 0.25), rgba(255, 255, 255, 0.14));
+  background: linear-gradient(
+    90deg,
+    rgba(255, 216, 77, 0.25),
+    rgba(255, 255, 255, 0.14)
+  );
   text-transform: uppercase;
 }
 
@@ -136,12 +153,20 @@
   padding: 1.45rem 1.35rem 2rem;
   border-radius: 16px;
   border: 1px solid var(--dm-border);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(241, 249, 255, 0.96));
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.97),
+    rgba(241, 249, 255, 0.96)
+  );
   box-shadow: 0 12px 30px rgba(18, 57, 122, 0.1);
 }
 
 [data-md-color-scheme="slate"] .md-content__inner {
-  background: linear-gradient(180deg, rgba(18, 26, 47, 0.96), rgba(16, 23, 41, 0.96));
+  background: linear-gradient(
+    180deg,
+    rgba(18, 26, 47, 0.96),
+    rgba(16, 23, 41, 0.96)
+  );
 }
 
 .md-typeset {
@@ -158,7 +183,13 @@
 .md-typeset h1 {
   display: inline-block;
   border-bottom: 4px solid transparent;
-  border-image: linear-gradient(90deg, var(--dm-brand-1), var(--dm-brand-2), var(--dm-brand-3)) 1;
+  border-image: linear-gradient(
+      90deg,
+      var(--dm-brand-1),
+      var(--dm-brand-2),
+      var(--dm-brand-3)
+    )
+    1;
   padding-bottom: 0.3rem;
   margin-bottom: 1rem;
 }
@@ -166,13 +197,23 @@
 .md-typeset h2 {
   padding-left: 0.62rem;
   border-left: 5px solid transparent;
-  border-image: linear-gradient(180deg, var(--dm-brand-1), var(--dm-brand-2), var(--dm-brand-3)) 1;
+  border-image: linear-gradient(
+      180deg,
+      var(--dm-brand-1),
+      var(--dm-brand-2),
+      var(--dm-brand-3)
+    )
+    1;
   margin-top: 2rem;
 }
 
 .md-typeset blockquote {
   border-left-color: var(--dm-brand-2);
-  background: linear-gradient(90deg, rgba(33, 182, 255, 0.12), rgba(127, 92, 255, 0.08));
+  background: linear-gradient(
+    90deg,
+    rgba(33, 182, 255, 0.12),
+    rgba(127, 92, 255, 0.08)
+  );
   border-radius: 0 10px 10px 0;
 }
 
@@ -181,7 +222,11 @@
   padding: 0.65rem 0.85rem;
   border-radius: 10px;
   border: 1px solid var(--dm-border);
-  background: linear-gradient(90deg, rgba(0, 195, 137, 0.14), rgba(33, 182, 255, 0.14));
+  background: linear-gradient(
+    90deg,
+    rgba(0, 195, 137, 0.14),
+    rgba(33, 182, 255, 0.14)
+  );
 }
 
 /* Collapsible blocks for code/images */
@@ -190,11 +235,19 @@
   border: 1px solid var(--dm-border);
   border-radius: 12px;
   overflow: hidden;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(239, 246, 255, 0.88));
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.86),
+    rgba(239, 246, 255, 0.88)
+  );
 }
 
 [data-md-color-scheme="slate"] .collapsible-block {
-  background: linear-gradient(180deg, rgba(17, 26, 48, 0.9), rgba(14, 21, 40, 0.9));
+  background: linear-gradient(
+    180deg,
+    rgba(17, 26, 48, 0.9),
+    rgba(14, 21, 40, 0.9)
+  );
 }
 
 .collapsible-block > summary {
@@ -206,7 +259,12 @@
   font-size: 0.9rem;
   color: var(--dm-ink);
   border-bottom: 1px solid rgba(33, 182, 255, 0.25);
-  background: linear-gradient(90deg, rgba(0, 195, 137, 0.2), rgba(33, 182, 255, 0.16), rgba(127, 92, 255, 0.18));
+  background: linear-gradient(
+    90deg,
+    rgba(0, 195, 137, 0.2),
+    rgba(33, 182, 255, 0.16),
+    rgba(127, 92, 255, 0.18)
+  );
 }
 
 .collapsible-block > summary::-webkit-details-marker {
@@ -273,7 +331,12 @@
 }
 
 .md-typeset table:not([class]) th {
-  background: linear-gradient(90deg, rgba(0, 195, 137, 0.18), rgba(33, 182, 255, 0.18), rgba(127, 92, 255, 0.2));
+  background: linear-gradient(
+    90deg,
+    rgba(0, 195, 137, 0.18),
+    rgba(33, 182, 255, 0.18),
+    rgba(127, 92, 255, 0.2)
+  );
   color: var(--dm-ink);
   font-weight: 800;
 }
@@ -282,7 +345,11 @@
   background: rgba(33, 182, 255, 0.07);
 }
 
-[data-md-color-scheme="slate"] .md-typeset table:not([class]) tbody tr:nth-child(odd) {
+[data-md-color-scheme="slate"]
+  .md-typeset
+  table:not([class])
+  tbody
+  tr:nth-child(odd) {
   background: rgba(127, 92, 255, 0.1);
 }
 
@@ -303,7 +370,10 @@
 @media (min-width: 76.25em) {
   .md-main__inner {
     display: grid;
-    grid-template-columns: minmax(13rem, 15rem) minmax(0, 1fr) minmax(12rem, 14rem);
+    grid-template-columns: minmax(13rem, 15rem) minmax(0, 1fr) minmax(
+        12rem,
+        14rem
+      );
     gap: 1.1rem;
     max-width: 100%;
     margin: 0;
@@ -382,9 +452,22 @@
 .custom-footer {
   margin-top: 1.6rem;
   background:
-    radial-gradient(circle at 12% 12%, rgba(255, 216, 77, 0.22), transparent 30%),
-    radial-gradient(circle at 82% 18%, rgba(127, 92, 255, 0.24), transparent 30%),
-    linear-gradient(115deg, var(--dm-header-1), var(--dm-header-2) 54%, var(--dm-header-3));
+    radial-gradient(
+      circle at 12% 12%,
+      rgba(255, 216, 77, 0.22),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 82% 18%,
+      rgba(127, 92, 255, 0.24),
+      transparent 30%
+    ),
+    linear-gradient(
+      115deg,
+      var(--dm-header-1),
+      var(--dm-header-2) 54%,
+      var(--dm-header-3)
+    );
   color: #fff;
   border-top: 1px solid rgba(255, 255, 255, 0.45);
 }
@@ -459,7 +542,11 @@
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 10px;
   padding: 0.52rem 0.8rem;
-  background: linear-gradient(90deg, rgba(255, 216, 77, 0.9), rgba(255, 255, 255, 0.88));
+  background: linear-gradient(
+    90deg,
+    rgba(255, 216, 77, 0.9),
+    rgba(255, 255, 255, 0.88)
+  );
   color: #12324f;
   font-weight: 900;
   cursor: pointer;

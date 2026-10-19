@@ -19,7 +19,9 @@
       if (typeof __md_get === "function") {
         const base = __md_get("__base");
         if (base && typeof base === "string") {
-          return ensureTrailingSlash(new URL(base, window.location.origin).href);
+          return ensureTrailingSlash(
+            new URL(base, window.location.origin).href,
+          );
         }
       }
     } catch (error) {
@@ -31,7 +33,9 @@
       return ensureTrailingSlash(new URL(".", baseEl.href).href);
     }
 
-    return ensureTrailingSlash(new URL(getProjectRootFromPathname(), window.location.origin).href);
+    return ensureTrailingSlash(
+      new URL(getProjectRootFromPathname(), window.location.origin).href,
+    );
   }
 
   function url(path) {
@@ -119,9 +123,12 @@
   }
 
   function getSiteTitle() {
-    const title = document.querySelector(".md-header__topic .md-ellipsis") ||
+    const title =
+      document.querySelector(".md-header__topic .md-ellipsis") ||
       document.querySelector(".md-header__title .md-ellipsis");
-    return title ? title.textContent.trim() : "Discrete Mathematics for Computing";
+    return title
+      ? title.textContent.trim()
+      : "Discrete Mathematics for Computing";
   }
 
   function addFooterBlock() {
@@ -222,11 +229,12 @@
 
       const subject = encodeURIComponent("CS285 Documentation Subscription");
       const body = encodeURIComponent(
-        `Please subscribe this email to CS285 documentation updates:\n\n${email}\n\nRequested from: ${window.location.href}`
+        `Please subscribe this email to CS285 documentation updates:\n\n${email}\n\nRequested from: ${window.location.href}`,
       );
       window.location.href = `mailto:Shoug.Alomran@Shoug-Tech.com?subject=${subject}&body=${body}`;
 
-      status.textContent = "Subscription request prepared. Please send the opened email to complete signup.";
+      status.textContent =
+        "Subscription request prepared. Please send the opened email to complete signup.";
       input.value = "";
     };
   }
@@ -260,7 +268,12 @@
 
       let container = img;
       const parent = img.parentElement;
-      if (parent && parent.tagName === "P" && parent.children.length === 1 && parent.textContent.trim() === "") {
+      if (
+        parent &&
+        parent.tagName === "P" &&
+        parent.children.length === 1 &&
+        parent.textContent.trim() === ""
+      ) {
         container = parent;
       }
 

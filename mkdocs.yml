@@ -1,48 +1,33 @@
 site_name: Discrete Mathematics for Computing
-site_description: CS285 secure key exchange documentation, implementation notes, and results
+site_description: CS285 secure key exchange project. Diffie–Hellman key exchange in Java, from modular arithmetic and primitive roots to a working encrypted message, with implementation notes, source code and test results.
+site_author: Shoug Fawaz Alomran
 site_url: https://secure-key-exchange.shoug-tech.com/
+repo_url: https://github.com/Shoug-Alomran/CS285-CryptographyProject
 use_directory_urls: true
 exclude_docs: |
   .DS_Store
 copyright: © 2026 Shoug Fawaz Alomran · All rights reserved
 
 theme:
-  name: material
-  custom_dir: overrides
-  logo: logo.png
-  favicon: google.png
-  language: en
-  features:
-    - navigation.top
-    - navigation.tabs
-    - content.code.copy
-  palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: green
-      accent: light green
-      toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: green
-      accent: light green
-      toggle:
-        icon: material/white-balance-sunny
-        name: Switch to light mode
+  # Fully custom theme (no Material), shared with the other shoug-tech course
+  # sites. Templates live in theme/, styles and scripts in docs/assets/.
+  name: null
+  custom_dir: theme
+  locale: en
+  static_templates:
+    - 404.html
+  # Only build search/search_index.json; the ⌘K palette in site.js reads it.
+  search_index_only: true
 
 nav:
   - Home: index.md
-  - About: about.md
-  - Introduction: introduction.md
-  - Implementation: implementation.md
-  - Results: results.md
-  - Advantages & Limitations: advantages-limitations.md
-  - Conclusion: conclusion.md
-  - References: references.md
-  - Team: team.md
+  - Project:
+      - About: about.md
+      - Introduction: introduction.md
+      - Team: team.md
+      - References: references.md
   - Code:
+      - Architecture: implementation.md
       - Main: code/main.md
       - Key Exchange: code/keyexchange.md
       - Encryptor: code/encryptor.md
@@ -50,30 +35,40 @@ nav:
       - Helpers: code/helpers.md
       - Validator: code/validator.md
       - Utils: code/utils.md
-  - Report:
-      - View Report: report/report.md
-  - Copyright: copyright.md
+  - Evaluation:
+      - Results: results.md
+      - Advantages & Limitations: advantages-limitations.md
+      - Conclusion: conclusion.md
+      - Report: report/report.md
 
 plugins:
   - search
 
+hooks:
+  - hooks/icons.py
+
 markdown_extensions:
   - admonition
-  - toc:
-      permalink: true
-  - pymdownx.highlight
-  - pymdownx.superfences
-  - pymdownx.inlinehilite
-  - pymdownx.arithmatex:
-      generic: true
   - attr_list
   - md_in_html
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.highlight:
+      use_pygments: true
+      pygments_lang_class: true
+  - pymdownx.arithmatex:
+      generic: true
+  - toc:
+      permalink: "#"
 
-extra_javascript:
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - javascripts/cta-footer.js
-  - javascripts/team-profiles.js
-
-extra_css:
-  - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css
-  - styles/extra.css
+validation:
+  nav:
+    # copyright.md is intentionally footer-only (see theme/main.html).
+    omitted_files: ignore
+    not_found: warn
+    absolute_links: ignore
+  links:
+    not_found: warn
+    unrecognized_links: warn

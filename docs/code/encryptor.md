@@ -1,8 +1,29 @@
-# Encryptor.java
+---
+title: Encryptor.java
+nav_title: Encryptor
+summary: SHA-256 keystream, XOR, Base64
+icon: lock
+description: Encryptor class of the CS285 Diffie–Hellman key exchange project. Turn the shared key into a keystream and use it to encrypt and decrypt messages.
+kicker: Code · Encryption
+hero: Encryptor<span class="grad-text">.java</span>
+lead: Turn the shared key into a keystream and use it to encrypt and decrypt messages.
+chips:
+  - "47 lines"
+  - "SHA-256"
+  - "XOR · Base64"
+actions:
+  - label: Architecture overview
+    href: ../../implementation/
+    icon: graph
+---
 
-<div class="purpose-note"><strong>Purpose:</strong> Implement shared-key-derived encryption and decryption routines for message flow validation.</div>
+## Role in the system
 
-```java
+<p class="lead-in">The shared key is hashed with SHA-256 into 32 bytes. Each message byte is XORed with the key byte at the same position modulo 32, and the result is Base64-encoded. Since <code>(m ⊕ k) ⊕ k = m</code>, decryption runs the same XOR.</p>
+
+## Source
+
+```java title="Encryptor.java"
 import java.math.BigInteger;
 import java.util.Base64;
 import java.security.MessageDigest;

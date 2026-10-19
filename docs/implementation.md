@@ -1,42 +1,75 @@
-# Implementation
+---
+title: Implementation
+nav_title: Architecture
+summary: Class responsibilities, workflow and run modes
+icon: graph
+description: Architecture of the CS285 Diffie–Hellman Java implementation. Seven classes, the five-stage workflow from parameters to decryption, and the numerical and live run modes.
+kicker: Code · Architecture
+hero: Seven classes, <span class="grad-text">one handshake.</span>
+lead: The project is a transparent simulation of Diffie–Hellman key exchange in Java. Users supply parameters manually or generate them automatically, then verify key agreement through encryption and decryption output.
+chips:
+  - "Java · BigInteger"
+  - "7 classes"
+  - "3 menu options"
+actions:
+  - label: Start with Main.java
+    href: ../code/main/
+    icon: code
+  - label: See the results
+    href: ../results/
+    icon: check
+---
 
-<div class="purpose-note"><strong>Purpose:</strong> Document class responsibilities, execution flow, and operating modes of the Java implementation.</div>
-
-The project is implemented in **Java** as a transparent simulation of **Diffie-Hellman key exchange**. Users can supply parameters manually or generate them automatically, then verify key agreement through encryption and decryption output.
-
-## Program Structure
+## Program structure
 
 | Class | Responsibility |
-|---|---|
-| `Main.java` | Application entry point, menu flow, mode selection, and final result display. |
-| `Parameters.java` | Stores public parameters \( q \) and \( \alpha \). |
-| `KeyExchange.java` | Computes public keys and shared secret values. |
-| `Encryptor.java` | Encrypts and decrypts messages using the shared secret. |
-| `Validator.java` | Validates prime checks, parameter ranges, and message constraints. |
-| `Helpers.java` | Handles input prompts and validation loops. |
-| `Utils.java` | Provides support utilities such as random generation and formatting helpers. |
+| --- | --- |
+| [`Main.java`](code/main.md) | Application entry point, menu flow, mode selection, and final result display. |
+| [`Parameters.java`](code/parameters.md) | Stores the public parameters \( q \) and \( \alpha \). |
+| [`KeyExchange.java`](code/keyexchange.md) | Computes public keys and shared secret values. |
+| [`Encryptor.java`](code/encryptor.md) | Encrypts and decrypts messages using the shared secret. |
+| [`Validator.java`](code/validator.md) | Validates prime checks, parameter ranges, and message constraints. |
+| [`Helpers.java`](code/helpers.md) | Handles input prompts and validation loops. |
+| [`Utils.java`](code/utils.md) | Provides support utilities such as random generation and formatting helpers. |
 
-!!! note "Design Principle"
-    The code follows separation of concerns so each class has a focused role.
+!!! note "Design principle"
+    The code follows separation of concerns, so each class has a focused role.
 
-## Workflow Summary
+## Workflow
 
-1. **Input stage:** Collect \( q \) and \( \alpha \).
-2. **Key stage:** Each participant selects a private key and computes a public key.
-3. **Exchange stage:** Public keys are exchanged; each side computes a shared secret.
-4. **Encryption stage:** A plaintext message (more than 20 characters) is encrypted.
-5. **Decryption stage:** Ciphertext is decrypted to confirm correctness.
+<div class="steps" markdown>
+<div class="step" markdown><div markdown>
+#### Input
+Collect \( q \) and \( \alpha \), typed in or generated automatically.
+</div></div>
+<div class="step" markdown><div markdown>
+#### Keys
+Each participant selects a private key and computes a public key.
+</div></div>
+<div class="step" markdown><div markdown>
+#### Exchange
+Public keys are exchanged and each side computes the shared secret.
+</div></div>
+<div class="step" markdown><div markdown>
+#### Encryption
+A plaintext message of more than 20 characters is encrypted.
+</div></div>
+<div class="step" markdown><div markdown>
+#### Decryption
+The ciphertext is decrypted to confirm correctness.
+</div></div>
+</div>
 
-## User Modes
+## User modes
 
 | Mode | Purpose |
-|---|---|
-| **Numerical Example** | Demonstrates the process with small educational values. |
-| **Live Mode** | Uses manual or auto-generated values for interactive testing. |
+| --- | --- |
+| **Numerical example** | Demonstrates the process with small educational values, either fixed (\( q = 23, \alpha = 5 \)) or auto-generated. |
+| **Live mode** | Uses manual or auto-generated values for interactive testing. |
 
-## Example Console Interaction
+## Example console interaction
 
-```text
+```text title="java Main"
 --- Royal Convoy - Secure Communication (Diffie-Hellman / ECDH Demo) ---
 This program demonstrates how the control center and vehicles exchange keys securely.
 

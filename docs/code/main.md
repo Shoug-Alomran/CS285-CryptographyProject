@@ -1,8 +1,29 @@
-# Main.java
+---
+title: Main.java
+nav_title: Main
+summary: Entry point, menu and the three run modes
+icon: terminal
+description: Main class of the CS285 Diffie–Hellman key exchange project. Show the main execution flow, mode handling and end-to-end orchestration.
+kicker: Code · Entry point
+hero: Main<span class="grad-text">.java</span>
+lead: Show the main execution flow, mode handling and end-to-end orchestration.
+chips:
+  - "193 lines"
+  - "out-edges: Helpers, Encryptor, Parameters"
+  - "3 modes"
+actions:
+  - label: Architecture overview
+    href: ../../implementation/
+    icon: graph
+---
 
-<div class="purpose-note"><strong>Purpose:</strong> Show the main execution flow, mode handling, and end-to-end orchestration logic.</div>
+## Role in the system
 
-```java
+<p class="lead-in">The root of the class graph. It reads the menu choice, sets up <code>q</code> and <code>α</code>, computes both public keys and the shared key with <code>modPow</code>, then hands the key to <code>Encryptor</code>.</p>
+
+## Source
+
+```java title="Main.java"
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Scanner;
